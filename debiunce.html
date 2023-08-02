@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Document</title>
+</head>
+<body>
+    <input type="text" id="inpbox" onkeyup="suggestion()">
+
+
+    <script>
+        const inp = document.getElementById('inpbox')
+  let timer;
+
+    const debounce=(fn,delay)=>{
+        if(timer)clearTimeout
+      timer= setTimeout(fn,delay)
+    }
+
+        const suggestion =()=>{
+       debounce(()=>{
+       console.log(inp.value);
+    },2000)
+            
+        }
+    </script>
+</body>
+</html>

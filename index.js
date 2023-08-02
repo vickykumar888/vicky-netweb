@@ -1,1 +1,0 @@
-console.log("my first cosnole in js");
