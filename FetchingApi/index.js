@@ -1,150 +1,5 @@
-// let img = "https://picsum.photos/200/300";
-// const electronicSalesData = [
-//   {
-//     "id": 1,
-//     "name": "Laptop",
-//     "image": img,
-//     "price": 800
-//   },
-//   {
-//     "id": 2,
-//     "name": "Smartphone",
-//     "image": img,
-//     "price": 500
-//   },
-//   {
-//     "id": 3,
-//     "name": "Headphones",
-//     "image": img,
-//     "price": 100
-//   },
-  
-   
-//       {
-//         "id": 1,
-//         "name": "Bottle",
-//         "image": img,
-//         "price": 800
-//       },
-//       {
-//         "id": 2,
-//         "name": "Cup",
-//         "image": img,
-//         "price": 500
-//       },
-//       {
-//         "id": 3,
-//         "name": "Mobile",
-//         "image": img,
-//         "price": 100
-//       },
-//       {
-//         "id": 4,
-//         "name": "Tablet",
-//         "image": img,
-//         "price": 300
-//       },
-//       {
-//         "id": 5,
-//         "name": "Smartwatch",
-//         "image": img,
-//         "price": 200
-//       },
-//       {
-//         "id": 6,
-//         "name": "Camera",
-//         "image": img,
-//         "price": 600
-//       },
-//       {
-//         "id": 7,
-//         "name": "TV",
-//         "image": img,
-//         "price": 1000
-//       },
-//       {
-//         "id": 8,
-//         "name": "Gaming Console",
-//         "image": img,
-//         "price": 400
-//       },
-//       {
-//         "id": 9,
-//         "name": "Wireless Earbuds",
-//         "image": img,
-//         "price": 150
-//       },
-//       {
-//         "id": 10,
-//         "name": "Power Bank",
-//         "image": img,
-//         "price": 50
-//       },
-    
-//           {
-//             "id": 1,
-//             "name": "Laptop",
-//             "image": img,
-//             "price": 800
-//           },
-//           {
-//             "id": 2,
-//             "name": "Smartphone",
-//             "image": img,
-//             "price": 500
-//           },
-//           {
-//             "id": 3,
-//             "name": "Headphones",
-//             "image": img,
-//             "price": 100
-//           },
-//           {
-//             "id": 4,
-//             "name": "Tablet",
-//             "image": img,
-//             "price": 300
-//           },
-//           {
-//             "id": 5,
-//             "name": "Smartwatch",
-//             "image": img,
-//             "price": 200
-//           },
-//           {
-//             "id": 6,
-//             "name": "Camera",
-//             "image": img,
-//             "price": 600
-//           },
-//           {
-//             "id": 7,
-//             "name": "TV",
-//             "image": img,
-//             "price": 1000
-//           },
-//           {
-//             "id": 8,
-//             "name": "Gaming Console",
-//             "image": img,
-//             "price": 400
-//           },
-//           {
-//             "id": 9,
-//             "name": "Wireless Earbuds",
-//             "image": img,
-//             "price": 150
-//           },
-//           {
-//             "id": 10,
-//             "name": "Power Bank",
-//             "image": img,
-//             "price": 50
-//           }
-//             ];
-        
 const apiURL = "https://jsonplaceholder.typicode.com/photos";
-const productsPerPage = 8;
+let productsPerPage = 10;
 let currentPage = 1;
 
 const productContainer = document.getElementById('productContainer');
@@ -153,15 +8,20 @@ const pagination = document.getElementById('pagination');
 const popup = document.getElementById('popup');
 const popupContent = document.getElementById('popupContent');
 const closeBtn = document.getElementById('closeBtn');
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const productsPerPageDropdown = document.getElementById('productsPerPage');
 
 let productsData = [];
+let filteredProducts = [];
 
 async function fetchProducts() {
   try {
     let data = await fetch(apiURL);
-      productsData = await data.json();
-      productsData = productsData.slice(0, 32);
+    productsData = await data.json();
+    productsData = productsData.slice(0, 200); 
 
+    filteredProducts = productsData;
    
     renderProducts(currentPage);
   } catch (error) {
@@ -171,12 +31,6 @@ async function fetchProducts() {
 
 function renderProducts(page) {
   productContainer.innerHTML = '';
-
-  const filteredProducts = productsData.filter(product =>
-    product.title.toLowerCase().includes(searchInput.value.toLowerCase())
-  );
- 
-
 
   const startIndex = (page - 1) * productsPerPage;
   const endIndex = startIndex + productsPerPage;
@@ -188,7 +42,7 @@ function renderProducts(page) {
     productCard.innerHTML = `
       <img src="${product.url}" alt="${product.name}">
       <p>Price: $${product.id}</p>
-      <p>Title: ${product.title.slice(0,6)}</p>
+      <p>Title: ${product.title.slice(0, 6)}</p>
     `;
     productCard.addEventListener('click', () => showProductDetails(product));
     productContainer.appendChild(productCard);
@@ -221,26 +75,46 @@ function showProductDetails(product) {
   `;
   popup.style.display = 'block';
 }
+
 closeBtn.addEventListener('click', closePopup);
 
 function closePopup() {
   popup.style.display = 'none';
 }
 
+// Debounce for search input
+let Timer;
 searchInput.addEventListener('input', () => {
-  currentPage = 1;
-  renderProducts(currentPage);
-
-
-  let debounceTimer;
-  searchInput.addEventListener('input', () => {
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => {
-      currentPage = 1;
-      renderProducts(currentPage);
-    }, 500);
-  });
+  clearTimeout(Timer);
+  Timer = setTimeout(() => {
+    currentPage = 1;
+    const searchText = searchInput.value.toLowerCase();
+    filteredProducts = productsData.filter(product =>
+      product.title.toLowerCase().includes(searchText)
+    );
+    renderProducts(currentPage);
+  }, 2000);
 });
 
+prevBtn.addEventListener('click', () => {
+  if (currentPage > 1) {
+    currentPage--;
+    renderProducts(currentPage);
+  }
+});
+
+nextBtn.addEventListener('click', () => {
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+  if (currentPage < totalPages) {
+    currentPage++;
+    renderProducts(currentPage);
+  }
+});
+
+productsPerPageDropdown.addEventListener('change', () => {
+  productsPerPage = parseInt(productsPerPageDropdown.value);
+  currentPage = 1;
+  renderProducts(currentPage);
+});
 
 fetchProducts();

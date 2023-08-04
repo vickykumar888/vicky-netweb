@@ -9,11 +9,26 @@
 <body>
   <div style="max-width: 1140px; margin: auto;">
   <header>
-    <input type="text" id="searchInput" onchange="betterFunction()" placeholder="Search by name...">
+    <input type="text" id="searchInput"  placeholder="Search by name...">
   </header>
   
   <div class="product-container" id="productContainer"></div>
   <div class="pagination" id="pagination"></div>
+  <div>
+    <label>Products Per Page:</label>
+    <select id="productsPerPage">
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="30">30</option>
+      <option value="40">40</option>
+      <option value="50">50</option>
+
+    </select>
+  </div>
+  <div>
+    <button id="prevBtn"><</button>
+    <button id="nextBtn">></button>
+  </div>
 
   <div class="popup" id="popup">
     <div class="popup-content" id="popupContent"></div>
