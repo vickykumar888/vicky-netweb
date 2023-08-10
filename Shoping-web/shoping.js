@@ -1,136 +1,104 @@
-const productListElement = document.getElementById('productList');
-const paginationElement = document.getElementById('pagination');
-const searchInput = document.getElementById('searchInput');
-const searchButton = document.getElementById('searchButton');
-const popup = document.getElementById('productPopup');
-const popupContent = document.getElementById('popupContent');
-const closeBtn = document.getElementById('closeBtn');
-
-const apiEndpoint = 'https://dummyjson.com/products';
-const productsPerPage = 10;
 let currentPage = 1;
+let productsPerPage = 5;
+let productData = []; 
 
-async function fetchProductData(query = '') {
-    try {
-        const response = await fetch(`${apiEndpoint}?q=${encodeURIComponent(query)}`);
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error', error);
-        return null;
-    }
-}
-
-function createProductCard(product) {
-  const productCard = document.createElement('div');
-  productCard.classList.add('product-card');
-
-  const productTitle = document.createElement('h3');
-  productTitle.textContent = product.title;
-  productCard.appendChild(productTitle);
-
-  const productImage = document.createElement('img');
-  productImage.src = product.images[0];
-  productImage.alt = product.title;
-  productCard.appendChild(productImage);
-
-  const productPrice = document.createElement('p');
-  productPrice.textContent = `Price: $${product.price}`;
-  productCard.appendChild(productPrice);
-
-  const productBrand = document.createElement('p');
-  productBrand.textContent = `Brand: ${product.brand}`;
-  productCard.appendChild(productBrand);
-
-  const productRating = document.createElement('p');
-  productRating.textContent = `Rating: ${product.rating}`;
-  productCard.appendChild(productRating);
-
-  const buyButton = document.createElement('button');
-  buyButton.textContent = 'Buy Now';
-  buyButton.classList.add('buy-btn');
-  productCard.appendChild(buyButton);
-
-  productCard.addEventListener('click', () => showPopup(product));
-  return productCard;
+// product list
+async function initProductList() {
+    productData = await fetchProductData(); 
+    loadProductList(); 
+    updateButtons();
 }
 
 
-// function showPopup(product) {
-//   popupContent.innerHTML = `
-//       <h3>${product.title}</h3>
-//       <div class="product-images">
-//           ${product.images.map(imageUrl => `<img src="${imageUrl}" alt="${product.title}">`).join('')}
-//       </div>
-//       <p>Price: $${product.price}</p>
-//       <p>Brand: ${product.brand}</p>
-//       <p>Rating: ${product.rating}</p>
-//       <p>Description: ${product.description}</p>
-//   `;
-//   popup.style.display = 'flex';
-// }
-// function hidePopup() {
-//   popup.style.display = 'none';
-// }
-// closeBtn.addEventListener('click', hidePopup);
+// display product list
 
-// window.addEventListener('click', (event) => {
-//     if (event.target === popup) {
-//         hidePopup();
-//     }
-// });
-
-async function displayProducts(products) {
+function loadProductList() {
+    const productList = document.getElementById('productList');
+    
     const startIndex = (currentPage - 1) * productsPerPage;
     const endIndex = startIndex + productsPerPage;
-    const currentProducts = products.slice(startIndex, endIndex);
-    let productHTML = '';
-    currentProducts.forEach(product => {
-        const productCard = createProductCard(product);
-        productHTML += productCard.outerHTML;
-    });
-    productListElement.innerHTML = productHTML;
-    showPagination(products.length);
-}
 
-function showPagination(totalProducts) {
-    const totalPages = Math.ceil(totalProducts / productsPerPage);
-    let paginationHTML = '';
-    for (let i = 1; i <= totalPages; i++) {
-        paginationHTML += `<button class="page-btn ${currentPage === i ? 'active' : ''}" data-page="${i}">${i}</button>`;
-    }
-    paginationElement.innerHTML = paginationHTML;
-    const pageButtons = document.querySelectorAll('.page-btn');
-    pageButtons.forEach(button => {
-        button.addEventListener('click', async () => {
-            currentPage = parseInt(button.dataset.page);
-            const searchQuery = searchInput.value.trim();
-            const response = await fetchProductData(searchQuery);
-            if (response && Array.isArray(response.products)) {
-                displayProducts(response.products);
-            } else {
-                console.error('Search results are invalid:', response);
-            }
-        });
+    productList.innerHTML = ''; 
+
+    productData.slice(startIndex, endIndex).forEach(product => {
+        const productItem = document.createElement('div');
+        productItem.classList.add('product');
+        productItem.innerHTML = `
+            <h3>${product.title}</h3>
+            <img src="${product.thumbnail}" alt="${product.title}" width="300px">
+            <p>Price: $${product.price}</p>
+            <button onclick="navigateToProductDetail(${product.id})">Buy Now</button>
+        `;
+        productList.appendChild(productItem);
     });
 }
 
-searchButton.addEventListener('click', async () => {
-    currentPage = 1; 
-    const searchQuery = searchInput.value.trim();
-    const response = await fetchProductData(searchQuery);
-    if (response && Array.isArray(response.products)) {
-        displayProducts(response.products);
-    } else {
-        console.error('Search results are invalid:', response);
-    }
-});
 
-window.addEventListener('load', async () => {
-    const response = await fetchProductData();
-    if (response && Array.isArray(response.products)) {
-        displayProducts(response.products);
-    } else {
-        console.error('Error fetching product data:', response);
+//product data from the API
+async function fetchProductData() {
+    try {
+        const response = await fetch('https://dummyjson.com/products');
+        const data = await response.json();
+        return data.products;
+    } catch (error) {
+        console.error('Error fetching product data:', error);
+        return [];
     }
-});
+}
+
+//product detail page
+function navigateToProductDetail(productId) {
+    window.location.href = `product-detail.html?id=${productId}`;
+}
+
+function changePerPage() {
+    productsPerPage = parseInt(document.getElementById('perPage').value);
+    currentPage = 1;
+    loadProductList();
+}
+
+function navigatePage(direction) {
+    currentPage += direction;
+    loadProductList();
+    updateButtons();
+}
+
+//pagination buttons
+function updateButtons() {
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    prevBtn.disabled = currentPage === 1;
+    nextBtn.disabled = currentPage * productsPerPage >= productsPerPage * Math.ceil(productData.length / productsPerPage);
+}
+
+let debounceTimeout;
+
+// Debounce function
+function debounce(func, delay) {
+    clearTimeout(debounceTimeout);
+    debounceTimeout = setTimeout(func, delay);
+}
+
+// handle search
+function debouncedSearch() {
+    debounce(searchProducts, 300);
+}
+
+
+function searchProducts() {
+    const searchInput = document.getElementById('searchInput');
+    const searchText = searchInput.value.toLowerCase();
+    
+    const filteredProducts = productData.filter(product => 
+        product.title.toLowerCase().includes(searchText)
+    );
+
+    currentPage = 1;
+    loadProductList(filteredProducts);
+    updateButtons();
+
+    console.log(filteredProducts);
+}
+
+window.onload = initProductList;

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="./shoping.css">
+</head>
+<body>
+    <h1>Your Shopping Cart</h1>
+    <div id="cartItems" class="cart-items">
+    </div>
+    <div>
+        Total Price of All Items: <span id="totalCartPrice">$0.00</span>
+    </div>
+    
+    <div id="orderPopup" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <h2>Place Your Order</h2>
+            <form onsubmit="submitOrder(event)">
+                <label for="name">Name:</label>
+                <input type="text" id="name" required><br>
+                <label for="email">Email:</label>
+                <input type="email" id="email" required><br>
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" required><br>
+                <button type="submit">Submit Order</button>
+            </form>
+        </div>
+    </div>
+    
+    <button onclick="openPopup()">Order</button>
+    <script>
+        window.onload = () => {
+            displayCart();
+        };
+
+window.onload = displayCart;
+
+function displayCart() {
+    const cartItemsDiv = document.getElementById('cartItems');
+    const totalCartPriceSpan = document.getElementById('totalCartPrice');
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    cartItemsDiv.innerHTML = '';
+    let totalCartPrice = 0;
+
+    cart.forEach(cartItem => {
+        const cartItemDiv = document.createElement('div');
+        cartItemDiv.classList.add('cart-item');
+        const totalPrice = (cartItem.price * cartItem.quantity).toFixed(2);
+        totalCartPrice += parseFloat(totalPrice);
+        cartItemDiv.innerHTML = `
+            <h3>${cartItem.title}</h3>
+            <img src="${cartItem.thumbnail}" alt="${cartItem.title}" width="100">
+            <p>Price: $${cartItem.price}</p>
+            <p>Quantity: ${cartItem.quantity}</p>
+            <p>Total Price: $${totalPrice}</p>
+        `;
+        cartItemsDiv.appendChild(cartItemDiv);
+    });
+
+    totalCartPriceSpan.textContent = `$${totalCartPrice.toFixed(2)}`;
+
+}
+
+// cart.js
+function openPopup() {
+    const popup = document.getElementById('orderPopup');
+    popup.style.display = 'block';
+}
+
+function closePopup() {
+    const popup = document.getElementById('orderPopup');
+    popup.style.display = 'none';
+}
+
+function submitOrder(event) {
+    event.preventDefault();
+        
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+
+
+    const totalCartPriceSpan = document.getElementById('totalCartPrice');
+    const totalCartPrice = parseFloat(totalCartPriceSpan.textContent.replace('$', ''));
+
+    const orderSummary = `Order Summary:
+    Name: ${name}
+    Email: ${email}
+    Phone: ${phone}
+    Total Price: $${totalCartPrice.toFixed(2)}`;
+
+    alert(`Order successfully placed!\n\n${orderSummary}`);
+
+    localStorage.removeItem('cart');
+    location.reload();
+}
+
+    </script>
+</body>
+</html>

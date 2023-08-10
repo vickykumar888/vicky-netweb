@@ -3,26 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product</title>
-    <link rel="stylesheet" href="shoping.css">
+    <title>Product Listing</title>
 </head>
 <body>
-    <div class="container">
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search products...">
-            <button id="searchButton">Search</button>
-        </div>
-        <div class="product-list" id="productList">
-        </div>
-        <div class="pagination" id="pagination"></div>
-    </div>
-
-    <div id="productPopup" class="popup">
-      <div class="popup-content" id="popupContent">
-          <span class="close-btn" id="closeBtn">&times;</span>
-      </div>
-  </div>
-
+    <h1>Product Listing</h1>
+    
+    <input type="text" id="searchInput" oninput="debouncedSearch()" placeholder="Search...">
+    
+    <div id="productList"></div>
+    
+    <button id="prevBtn" onclick="navigatePage(-1)" disabled>Previous</button>
+    <button id="nextBtn" onclick="navigatePage(1)" disabled>Next</button>
+    
+    <select id="perPage" onchange="changePerPage()">
+        <option value="5">5 Per Page</option>
+        <option value="10">10 Per Page</option>
+        <option value="20">20 Per Page</option>
+    </select>
+    
     <script src="shoping.js"></script>
 </body>
 </html>
