@@ -11,62 +11,111 @@
     <h1>Your Shopping Cart</h1>
     <ul id="cartItems"></ul>
     <p id="cartTotal">Total: $0</p>
-    <!-- <a href="product_details.html">Continue Shopping</a>  -->
-    <button id="checkoutBtn">Continue Shopping</button>
+    <button id="checkoutBtn" >Continue Shopping</button>
     
     <div id="checkoutForm" style="display: none;">
+      
         <h2>Checkout Form</h2>
         <form id="form">
             <input type="text" id="name" placeholder="Name" required>
-            <input type="address" id="address" placeholder="Address"required>
+            <input type="text" id="address" placeholder="Address" required>
             <input type="hidden" id="selectedProduct" value="">
             <button type="submit">Submit</button>
         </form>
     </div>
 </div>
 <script>
-const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+document.addEventListener('DOMContentLoaded', () => {
 const cartItemsList = document.getElementById('cartItems');
 const cartTotal = document.getElementById('cartTotal');
+const checkoutBtn = document.getElementById('checkoutBtn');
+const checkoutForm = document.getElementById('checkoutForm');
+const selectedProductInput = document.getElementById('selectedProduct');
+const submitBtn = document.getElementById('submitBtn');
+
+let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+updateCart();
+updateCheckoutButton();
 
 function updateCart() {
     cartItemsList.innerHTML = '';
     let total = 0;
-
+    cartItems = cartItems.filter(item => item.quantity > 0);
     cartItems.forEach((item, index) => {
         const cartItem = document.createElement('li');
-        cartItem.textContent = `${item.quantity} x ${item.title} - $${item.price * item.quantity}`;
+        cartItem.textContent = `${item.quantity} x ${item.title} - $${(item.price * item.quantity).toFixed(2)}`;
         
+        const increaseBtn = document.createElement('button');
+          increaseBtn.textContent = '+';
+          increaseBtn.addEventListener('click', () => {
+              increaseQuantity(index);
+          }); 
+
+          const decreaseBtn = document.createElement('button');
+          decreaseBtn.textContent = '-';
+          decreaseBtn.addEventListener('click', () => {
+              decreaseQuantity(index);
+          });
         const removeBtn = document.createElement('button');
         removeBtn.textContent = 'Remove';
         removeBtn.addEventListener('click', () => {
             cartItems.splice(index, 1);
             localStorage.setItem('cartItems', JSON.stringify(cartItems));
             updateCart();
+            updateCheckoutButton();
         });
         
+        cartItem.appendChild(increaseBtn);
+        cartItem.appendChild(decreaseBtn);
         cartItem.appendChild(removeBtn);
         cartItemsList.appendChild(cartItem);
+
 
         total += item.price * item.quantity;
     });
 
     cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+}
+function updateCheckoutButton(){
+  if(cartItems.length >0){
+    checkoutBtn.disabled = false;
+  }else{
+    checkoutBtn.disabled = true;
+  }
+}
 
-    const checkoutBtn = document.getElementById('checkoutBtn');
-const checkoutForm = document.getElementById('checkoutForm');
-const selectedProductInput = document.getElementById('selectedProduct');
+ 
+function CheckoutButton(){
+  if(cartItems.length >0){
+    checkoutBtn.disabled = false;
+  }else{
+    checkoutBtn.disabled = true;
+  }
+}
+function increaseQuantity(index) {
+        cartItems[index].quantity++;
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        updateCart();
+    }
 
+    function decreaseQuantity(index) {
+        if (cartItems[index].quantity > 0) {
+            cartItems[index].quantity--;
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            updateCart();
+        }
+    }
 checkoutBtn.addEventListener('click', () => {
     checkoutForm.style.display = 'block';
     checkoutBtn.style.display = 'none';
 
-if (localStorage.getItem('cartItems')) {
+    if (localStorage.getItem('cartItems')) {
         submitBtn.disabled = false;
     } else {
         submitBtn.disabled = true;
     }
 });
+              
 
 
 const form = document.getElementById('form');
@@ -76,22 +125,19 @@ form.addEventListener('submit', (event) => {
     const name = document.getElementById('name').value;
     const address = document.getElementById('address').value;
     const selectedProduct = selectedProductInput.value;
-    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
-    if (cartItems.length === 0) {
-        alert("Please select at least one product before submitting.");
-        return;
-    }
+    // if (cartItems.length === 0) {
+    //     alert("Please select at least one product before submitting.");
+    //     return;
+    // }
     
     let totalPrice = 0;
     cartItems.forEach(item => {
         totalPrice += item.price * item.quantity;
     });
-
-    
+ 
     const chosenProducts = cartItems.map(item => `${item.quantity} x ${item.title}`).join('\n');
-
-    
+  
     const alertMessage = `Thank you for your order!\nName: ${name}\nAddress: ${address}\n\nChosen Products:\n${chosenProducts}\nTotal Price: $${totalPrice.toFixed(2)}`;
     alert(alertMessage);
     form.reset();
@@ -99,21 +145,14 @@ form.addEventListener('submit', (event) => {
     checkoutBtn.style.display = 'block';
     submitBtn.disabled = true;
 });
-
-
-document.getElementById('AddToCartBtn').addEventListener('click', () => {
-    
-    
-    selectedProductInput.value = `${quantity} x ${product.title}`;
-});
-}
-
-updateCart();
-
+  });
 
 </script>
 </body>
 </html>
+
+
+
 
 
 

@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,75 +27,86 @@
     <a href="addToCart.html">View Here!</a>
 </div>
 <script>
-const queryParams = new URLSearchParams(window.location.search);
-const productId = queryParams.get('id'); 
+document.addEventListener('DOMContentLoaded', () => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const productId = queryParams.get('id'); 
 
-const url = `https://dummyjson.com/products/${productId}`;
+    const url = `https://dummyjson.com/products/${productId}`;
+    
+    fetch(url)
+      .then(response => response.json())
+      .then(product => {
+        const productImage = document.getElementById('productImage');
+        const productTitle = document.getElementById('productTitle');
+        const productPrice = document.getElementById('productPrice');
+        const productBrand = document.getElementById('productBrand');
 
-fetch(url)
-  .then(response => response.json())
-  .then(product => {
-    const productImage = document.getElementById('productImage');
-    const productTitle = document.getElementById('productTitle');
-    const productPrice = document.getElementById('productPrice');
-    const productBrand = document.getElementById('productBrand');
+        productImage.src = product.images[0]; 
+        productTitle.textContent = product.title;
+        productPrice.textContent = `Price: $${product.price}`;
+        productBrand.textContent = `Brand: ${product.brand}`;
 
+        let quantity = 1;
+        const quantitySpan = document.getElementById('quantity');
+        const totalPrice = document.getElementById('totalPrice');
 
-    productImage.src = product.images[0]; 
-    productTitle.textContent = product.title;
-    productPrice.textContent = `Price: $${product.price}`;
-    productBrand.textContent = `Brand: ${product.brand}`;
+        function newQuantityAndPrice() {
+          quantitySpan.textContent = quantity;
+          const total = product.price * quantity;
+          totalPrice.textContent = `Total Price: $${total}`;
+        }
 
-    let quantity = 1;
-    const quantitySpan = document.getElementById('quantity');
-    const totalPrice = document.getElementById('totalPrice');
+        document.getElementById('decreaseQuantityBtn').addEventListener('click', () => {
+          if (quantity > 1) {
+            quantity--;
+            newQuantityAndPrice();
+          }
+        });
+
+        document.getElementById('increaseQuantityBtn').addEventListener('click', () => {
+          quantity++;
+          newQuantityAndPrice();
+        });
+
+        newQuantityAndPrice(); 
+
+        document.getElementById('AddToCartBtn').addEventListener('click', () => {
+          const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+          const cartItem = {
+            productId: productId,
+            title: product.title,
+            price: product.price,
+            quantity: quantity
+          };
+
+          cartItems.push(cartItem);
+
+          localStorage.setItem('cartItems', JSON.stringify(cartItems));
+          
+         
+          updateCartCount(cartItems.length);
+
+          console.log(`Added ${quantity} ${product.title} to cart`);
+        });
+
+      })
+      .catch(error => {
+        console.error("Error fetching product:", error);
+      });
 
     
-    function newQuantityAndPrice() {
-      quantitySpan.textContent = quantity;
-      const total = product.price * quantity;
-      totalPrice.textContent = `Total Price: $${total}`;
-    }
-
-    document.getElementById('decreaseQuantityBtn').addEventListener('click', () => {
-      if (quantity > 1) {
-        quantity--;
-        newQuantityAndPrice();
+    function updateCartCount(count) {
+      const cartCountElement = document.getElementById('cartCount');
+      if (cartCountElement) {
+        cartCountElement.textContent = count.toString();
       }
-    });
-
-    
-    document.getElementById('increaseQuantityBtn').addEventListener('click', () => {
-      quantity++;
-      newQuantityAndPrice();
-    });
-
-    newQuantityAndPrice(); 
-    
-    document.getElementById('AddToCartBtn').addEventListener('click', () => {
-    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    
-    const cartItem = {
-        productId: productId,
-        title: product.title,
-        price: product.price,
-        quantity: quantity
-    };
-    
-    cartItems.push(cartItem);
-    
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
-    
-    console.log(`Added ${quantity} ${product.title} to cart`);
+    }
 });
-
-  })
-  .catch(error => {
-    console.error("Error fetching product:", error);
-  });
 </script>
 </body>
 </html>
+
 
 <!-- // document.addEventListener('DOMContentLoaded', () => {
 //     const productsImage = document.getElementById('productImage');
