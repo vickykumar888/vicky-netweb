@@ -28,7 +28,7 @@ closeShopping.addEventListener('click', ()=>{
 let productsData = [];
 let filteredProducts = [];
 
-// let listCards = [];
+let listCards = [];
 
 
 async function fetchProducts() {
@@ -60,7 +60,6 @@ function renderProducts(page) {
       <p>Title: ${product.title.slice(0, 6)}</p>
        <button onclick="addToCart(${product.id})">Add to Cart</button>
     `;
-    // productCard.addEventListener('click', () => showProductDetails(product));
     productContainer.appendChild(productCard);
   });
 
@@ -71,7 +70,8 @@ function addToCart(id){
   if(listCards[id] == null){
     listCards[id] = JSON.parse(JSON.stringify(filteredProducts[id]));
     listCards[id].quantity = 1;
-    listCards[id].id = Number(listCards[id].id); 
+    // listCards[id].id = Number(listCards[id].id); 
+    localStorage.setItem('cartData', JSON.stringify(listCards));
 
 }
 reloadCard();
@@ -80,10 +80,12 @@ function reloadCard(){
   listCard.innerHTML = '';
   let count = 0;
   let totalPrice = 0;
+  let hascart=false;
   listCards.forEach((value, id)=>{
+    if(value != null){
       totalPrice = totalPrice + value.id;
       count = count + value.quantity;
-      if(value != null){
+     hascart=true;
           let newDiv = document.createElement('li');
           newDiv.innerHTML = `
               <div><img src="image/${value.url}"/></div>
@@ -97,10 +99,18 @@ function reloadCard(){
               listCard.appendChild(newDiv);
       }
   })
-  let shopButton = document.createElement('button');
-  shopButton.textContent = 'Shop';
-  shopButton.addEventListener('click', openShopForm);
-  listCard.appendChild(shopButton);
+  if(hascart){
+    let shopButton = document.createElement('button');
+    shopButton.textContent = 'Shop';
+    shopButton.addEventListener('click', openShopForm);
+    listCard.appendChild(shopButton);
+  }else {
+    let noCartHeading = document.createElement('h1');
+        noCartHeading.textContent = 'No-Item';
+        noCartHeading.classList.add('heading');
+    listCard.appendChild(noCartHeading);
+  }
+
 
   total.innerText = totalPrice.toLocaleString();
   quantity.innerText = count;
@@ -110,13 +120,13 @@ function changeQuantity(id, quantity){
       delete listCards[id];
   }else{
       listCards[id].quantity = quantity;
-      listCards[id].id = quantity * filteredProducts[id].id;
+      listCards[id].id = quantity * parseInt(filteredProducts[id].id);
   }
   reloadCard();
 }
 function openShopForm() {
   const shopWindow = window.open(`shop.html`, '_blank');
-  shopWindow.document.write(shopFormHTML);;
+  shopWindow.document.write(shopFormHTML);
 
 }
 
