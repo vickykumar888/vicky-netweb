@@ -3,15 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Third</title>
+  <title>fetching Products</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <div style="max-width: 1140px; margin: auto;">
+<body class="">
+  <div class="container">
   <header>
     <input type="text" id="searchInput"  placeholder="Search by name...">
+    <div class="shopping">
+      <img src="shopping-cart-outline.svg">
+      <span class="quantity">0</span>
+  </div>
   </header>
-  
   <div class="product-container" id="productContainer"></div>
   <div class="pagination" id="pagination"></div>
   <div>
@@ -22,20 +25,34 @@
       <option value="30">30</option>
       <option value="40">40</option>
       <option value="50">50</option>
-
+      
     </select>
   </div>
   <div>
     <button id="prevBtn"><</button>
     <button id="nextBtn">></button>
   </div>
+  </div>
+  <div class="card">
+    <h1>Card</h1>
+    <ul class="listCard">
+    </ul>
+    <div class="checkOut">
+        <div class="total">0</div>
+        <div class="closeShopping">Close</div>
+    </div>
+</div>
+  
+  
 
-  <div class="popup" id="popup">
+  <!-- <div class="popup" id="popup">
     <div class="popup-content" id="popupContent"></div>
     <span class="close-btn" id="closeBtn">&times;</span>
-  </div>
+  </div> -->
+  
 
-  <script src="index.js"></script>
-  </div>
+  <script src="script.js"></script>
+  <script src="data.js"></script>
+  
 </body>
 </html>
