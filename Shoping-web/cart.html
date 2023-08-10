@@ -8,6 +8,7 @@
     <h1>Your Shopping Cart</h1>
     <div id="cartItems" class="cart-items">
     </div>
+    <div id="emptyCartMessage" style="display: none;">Your cart is empty.</div>
     <div>
         Total Price of All Items: <span id="totalCartPrice">$0.00</span>
     </div>
@@ -34,69 +35,94 @@
             displayCart();
         };
 
-window.onload = displayCart;
+        function displayCart() {
+            const cartItemsDiv = document.getElementById('cartItems');
+            const emptyCartMessage = document.getElementById('emptyCartMessage');
+            const totalCartPriceSpan = document.getElementById('totalCartPrice');
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-function displayCart() {
-    const cartItemsDiv = document.getElementById('cartItems');
-    const totalCartPriceSpan = document.getElementById('totalCartPrice');
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cart.length === 0) {
+                cartItemsDiv.style.display = 'none';
+                emptyCartMessage.style.display = 'block';
+                totalCartPriceSpan.textContent = '$0.00';
+                return;
+            }
 
-    cartItemsDiv.innerHTML = '';
-    let totalCartPrice = 0;
+            cartItemsDiv.style.display = 'block';
+            emptyCartMessage.style.display = 'none';
 
-    cart.forEach(cartItem => {
-        const cartItemDiv = document.createElement('div');
-        cartItemDiv.classList.add('cart-item');
-        const totalPrice = (cartItem.price * cartItem.quantity).toFixed(2);
-        totalCartPrice += parseFloat(totalPrice);
-        cartItemDiv.innerHTML = `
-            <h3>${cartItem.title}</h3>
-            <img src="${cartItem.thumbnail}" alt="${cartItem.title}" width="100">
-            <p>Price: $${cartItem.price}</p>
-            <p>Quantity: ${cartItem.quantity}</p>
-            <p>Total Price: $${totalPrice}</p>
-        `;
-        cartItemsDiv.appendChild(cartItemDiv);
-    });
+            cartItemsDiv.innerHTML = '';
+            let totalCartPrice = 0;
 
-    totalCartPriceSpan.textContent = `$${totalCartPrice.toFixed(2)}`;
+            cart.forEach((cartItem, index) => {
+                const cartItemDiv = document.createElement('div');
+                cartItemDiv.classList.add('cart-item');
+                const totalPrice = (cartItem.price * cartItem.quantity).toFixed(2);
+                totalCartPrice += parseFloat(totalPrice);
+                cartItemDiv.innerHTML = `
+                    <h3>${cartItem.title}</h3>
+                    <img src="${cartItem.thumbnail}" alt="${cartItem.title}" width="100">
+                    <p>Price: $${cartItem.price}</p>
+                    <p>Quantity: 
+                        <button onclick="decreaseQuantity(${index})">-</button>
+                        ${cartItem.quantity}
+                        <button onclick="increaseQuantity(${index})">+</button>
+                    </p>
+                    <p>Total Price: $${totalPrice}</p>
+                `;
+                cartItemsDiv.appendChild(cartItemDiv);
+            });
 
-}
+            totalCartPriceSpan.textContent = `$${totalCartPrice.toFixed(2)}`;
+        }
 
-// cart.js
-function openPopup() {
-    const popup = document.getElementById('orderPopup');
-    popup.style.display = 'block';
-}
+        function increaseQuantity(index) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart[index].quantity++;
+            localStorage.setItem('cart', JSON.stringify(cart));
+            displayCart();
+        }
 
-function closePopup() {
-    const popup = document.getElementById('orderPopup');
-    popup.style.display = 'none';
-}
+        function decreaseQuantity(index) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cart[index].quantity > 1) {
+                cart[index].quantity--;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                displayCart();
+            }
+        }
 
-function submitOrder(event) {
-    event.preventDefault();
-        
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const phone = document.getElementById('phone').value;
+        function openPopup() {
+            const popup = document.getElementById('orderPopup');
+            popup.style.display = 'block';
+        }
 
+        function closePopup() {
+            const popup = document.getElementById('orderPopup');
+            popup.style.display = 'none';
+        }
 
-    const totalCartPriceSpan = document.getElementById('totalCartPrice');
-    const totalCartPrice = parseFloat(totalCartPriceSpan.textContent.replace('$', ''));
+        function submitOrder(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
 
-    const orderSummary = `Order Summary:
-    Name: ${name}
-    Email: ${email}
-    Phone: ${phone}
-    Total Price: $${totalCartPrice.toFixed(2)}`;
+            const totalCartPriceSpan = document.getElementById('totalCartPrice');
+            const totalCartPrice = parseFloat(totalCartPriceSpan.textContent.replace('$', ''));
 
-    alert(`Order successfully placed!\n\n${orderSummary}`);
+            const orderSummary = `Order Summary:
+            Name: ${name}
+            Email: ${email}
+            Phone: ${phone}
+            Total Price: $${totalCartPrice.toFixed(2)}`;
 
-    localStorage.removeItem('cart');
-    location.reload();
-}
+            alert(`Order successfully placed!\n\n${orderSummary}`);
 
+            localStorage.removeItem('cart');
+            location.reload();
+        }
     </script>
 </body>
 </html>
