@@ -1,0 +1,13 @@
+
+#search-product{
+    height: 33px;
+    padding-top: 15px;
+    padding-bottom: 5px;
+}
+.material{
+    border: none;
+   height: 25px;
+}
+.table-body .table-row{
+    text-align: center;
+}

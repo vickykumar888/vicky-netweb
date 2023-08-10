@@ -1,0 +1,89 @@
+body{
+  margin: 0 auto;
+  padding:0  auto;
+}
+#searchInput{
+  padding: 10px;
+  margin: 80px;
+  width: 300px;
+  translate: 400px;
+  border-radius: 10px;
+}
+#searchInput:hover{
+  box-shadow: 0 10px 10px lightgrey;
+  border: none;
+}
+header{
+  background-color: gray;
+}
+#productContainer{
+  display: grid;
+  grid-template-columns: auto auto auto;
+  
+}
+.product-card{
+  height: 500px;
+  width: 300px;
+  border: 1px solid black;
+  text-align: center;
+  align-items: center;
+ margin: 60px 0 60px 60px;
+  padding: 20px;border-radius: 10px;
+ 
+}
+.product-card:hover{
+  border: none;
+  box-shadow: 0 10px 10px lightgray;
+}
+.product-card img{
+  object-fit: cover;
+  width: 200px;
+  /* height: 200px; */
+}
+#prevBtn{
+  height: 35px;
+  width: 80px;
+  margin: 30px;
+  border-radius: 10px;
+  translate: 780%;
+}
+#prevBtn:hover{
+  background-color: beige;
+  box-shadow: 0 5px 5px lightgray;
+  border: none;
+}
+#nextBtn{
+  height: 35px;
+  width: 80px;
+  margin: 30px;
+  border-radius: 10px;
+  translate: 780%;
+}
+#nextBtn:hover{
+  background-color: beige;
+  box-shadow: 0 5px 5px lightgray;
+  border: none;
+}
+.products-page{
+  text-align: center;
+  font-size: 20px;
+  font-weight: lighter;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.close-btn{
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bolder;
+  color: black;
+}
+.close-btn:hover{
+  color: red;
+}
+.popup{
+  text-align: center;
+  margin-left: 30%;
+  border: 1px solid gray;
+  width: 500px;
+  margin-bottom: 80px;
+  height: auto;
+}

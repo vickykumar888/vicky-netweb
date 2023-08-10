@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="addToCart.css">
+</head>
+<body>
+   <div class="container">
+    <h1>Your Shopping Cart</h1>
+    <ul id="cartItems"></ul>
+    <p id="cartTotal">Total: $0</p>
+    <!-- <a href="product_details.html">Continue Shopping</a>  -->
+    <button id="checkoutBtn">Continue Shopping</button>
+    
+    <div id="checkoutForm" style="display: none;">
+        <h2>Checkout Form</h2>
+        <form id="form">
+            <input type="text" id="name" placeholder="Name" required>
+            <input type="address" id="address" placeholder="Address"required>
+            <input type="hidden" id="selectedProduct" value="">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+<script>
+const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+const cartItemsList = document.getElementById('cartItems');
+const cartTotal = document.getElementById('cartTotal');
+
+function updateCart() {
+    cartItemsList.innerHTML = '';
+    let total = 0;
+
+    cartItems.forEach((item, index) => {
+        const cartItem = document.createElement('li');
+        cartItem.textContent = `${item.quantity} x ${item.title} - $${item.price * item.quantity}`;
+        
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = 'Remove';
+        removeBtn.addEventListener('click', () => {
+            cartItems.splice(index, 1);
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            updateCart();
+        });
+        
+        cartItem.appendChild(removeBtn);
+        cartItemsList.appendChild(cartItem);
+
+        total += item.price * item.quantity;
+    });
+
+    cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+
+    const checkoutBtn = document.getElementById('checkoutBtn');
+const checkoutForm = document.getElementById('checkoutForm');
+const selectedProductInput = document.getElementById('selectedProduct');
+
+checkoutBtn.addEventListener('click', () => {
+    checkoutForm.style.display = 'block';
+    checkoutBtn.style.display = 'none';
+
+if (localStorage.getItem('cartItems')) {
+        submitBtn.disabled = false;
+    } else {
+        submitBtn.disabled = true;
+    }
+});
+
+
+const form = document.getElementById('form');
+form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    
+    const name = document.getElementById('name').value;
+    const address = document.getElementById('address').value;
+    const selectedProduct = selectedProductInput.value;
+    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+    if (cartItems.length === 0) {
+        alert("Please select at least one product before submitting.");
+        return;
+    }
+    
+    let totalPrice = 0;
+    cartItems.forEach(item => {
+        totalPrice += item.price * item.quantity;
+    });
+
+    
+    const chosenProducts = cartItems.map(item => `${item.quantity} x ${item.title}`).join('\n');
+
+    
+    const alertMessage = `Thank you for your order!\nName: ${name}\nAddress: ${address}\n\nChosen Products:\n${chosenProducts}\nTotal Price: $${totalPrice.toFixed(2)}`;
+    alert(alertMessage);
+    form.reset();
+    checkoutForm.style.display = 'none';
+    checkoutBtn.style.display = 'block';
+    submitBtn.disabled = true;
+});
+
+
+document.getElementById('AddToCartBtn').addEventListener('click', () => {
+    
+    
+    selectedProductInput.value = `${quantity} x ${product.title}`;
+});
+}
+
+updateCart();
+
+
+</script>
+</body>
+</html>
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Page</title>
+</head>
+<body>
+  <h1>Product List</h1>
+  <div id="product-container"></div>
+  
+  <h1>Product Details</h1>
+  <div id="product-details"></div>
+
+  <h1>Shopping Cart</h1>
+  <div id="cart-items"></div>
+
+  <script>
+    const productApi = "https://dummyjson.com/products/";
+    let productData = [];
+    let cartItems = [];
+
+    async function fetchProducts() {
+      try {
+        let response = await fetch(productApi);
+        productData = await response.json();
+        displayProducts(productData.products);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    }
+
+    function displayProducts(products) {
+      const productContainer = document.getElementById('product-container');
+      productContainer.innerHTML = '';
+
+      products.forEach(product => {
+        const productElement = document.createElement('div');
+        productElement.innerHTML = `
+          <h2>${product.name}</h2>
+          <p>${product.description}</p>
+          <p>Price: $${product.price}</p>
+          <button onclick="showProductDetail(${product.id})">Show Details</button>
+          <button onclick="addToCart(${product.id})">Add to Cart</button>
+        `;
+        productContainer.appendChild(productElement);
+      });
+    }
+
+    async function showProductDetail(productId) {
+      try {
+        const productResponse = await fetch(`${productApi}${productId}`);
+        const product = await productResponse.json();
+        displayProductDetail(product);
+      } catch (error) {
+        console.error("Error fetching product detail:", error);
+      }
+    }
+
+    function displayProductDetail(product) {
+      const productDetail = document.getElementById('product-details');
+      productDetail.innerHTML = `
+        <h2>${product.name}</h2>
+        <p>${product.description}</p>
+        <p>Price: $${product.price}</p>
+        <input type="number" id="quantity" value="1">
+        <button onclick="addToCart(${product.id})">Add to Cart</button>
+      `;
+    }
+
+    function addToCart(productId) {
+      const quantityInput = document.getElementById('quantity');
+      const quantity = parseInt(quantityInput.value, 10);
+
+      const product = productData.products.find(p => p.id === productId);
+      if (product) {
+        cartItems.push({ ...product, quantity });
+        updateCartDisplay();
+      }
+    }
+
+    function updateCartDisplay() {
+      const cartItemsContainer = document.getElementById('cart-items');
+      cartItemsContainer.innerHTML = '';
+
+      cartItems.forEach(item => {
+        const cartItemElement = document.createElement('div');
+        cartItemElement.innerHTML = `
+          <p>${item.name} - Quantity: ${item.quantity}</p>
+        `;
+        cartItemsContainer.appendChild(cartItemElement);
+      });
+    }
+
+    fetchProducts();
+  </script>
+</body>
+</html> -->

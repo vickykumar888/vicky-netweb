@@ -1,0 +1,172 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="product-detail.css">
+</head>
+<body>
+   <div class="container">
+    <div id="product-details">
+        <img id="productImage" src="" alt="Product Image">
+        <h2 id="productTitle"></h2>
+        <p id="productPrice"></p>
+        <p id="productBrand"></p>
+        <div>
+            <button id="decreaseQuantityBtn">Decrease Quantity</button>
+            <span id="quantity">1</span>
+            <button id="increaseQuantityBtn">Increase Quantity</button>
+        </div>
+        <p id="totalPrice">Total Price: </p>
+    </div>
+    <button id="AddToCartBtn">Add To Cart</button>
+    <a href="addToCart.html">View Here!</a>
+</div>
+<script>
+const queryParams = new URLSearchParams(window.location.search);
+const productId = queryParams.get('id'); 
+
+const url = `https://dummyjson.com/products/${productId}`;
+
+fetch(url)
+  .then(response => response.json())
+  .then(product => {
+    const productImage = document.getElementById('productImage');
+    const productTitle = document.getElementById('productTitle');
+    const productPrice = document.getElementById('productPrice');
+    const productBrand = document.getElementById('productBrand');
+
+
+    productImage.src = product.images[0]; 
+    productTitle.textContent = product.title;
+    productPrice.textContent = `Price: $${product.price}`;
+    productBrand.textContent = `Brand: ${product.brand}`;
+
+    let quantity = 1;
+    const quantitySpan = document.getElementById('quantity');
+    const totalPrice = document.getElementById('totalPrice');
+
+    
+    function newQuantityAndPrice() {
+      quantitySpan.textContent = quantity;
+      const total = product.price * quantity;
+      totalPrice.textContent = `Total Price: $${total}`;
+    }
+
+    document.getElementById('decreaseQuantityBtn').addEventListener('click', () => {
+      if (quantity > 1) {
+        quantity--;
+        newQuantityAndPrice();
+      }
+    });
+
+    
+    document.getElementById('increaseQuantityBtn').addEventListener('click', () => {
+      quantity++;
+      newQuantityAndPrice();
+    });
+
+    newQuantityAndPrice(); 
+    
+    document.getElementById('AddToCartBtn').addEventListener('click', () => {
+    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    
+    const cartItem = {
+        productId: productId,
+        title: product.title,
+        price: product.price,
+        quantity: quantity
+    };
+    
+    cartItems.push(cartItem);
+    
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    
+    console.log(`Added ${quantity} ${product.title} to cart`);
+});
+
+  })
+  .catch(error => {
+    console.error("Error fetching product:", error);
+  });
+</script>
+</body>
+</html>
+
+<!-- // document.addEventListener('DOMContentLoaded', () => {
+//     const productsImage = document.getElementById('productImage');
+//     const productsTitle = document.getElementById('productTitle');
+//     const productsPrice = document.getElementById('productPrice');
+//     const productsBrand = document.getElementById('productBrand');
+
+//     const queryParams = new URLSearchParams(window.location.search);
+
+    
+//     const imageParam = queryParams.get('product.images[0]');
+//     const titleParam = queryParams.get('product.title');
+//     const priceParam = parseFloat(queryParams.get('product.price'));
+//     const brandParam = queryParams.get('product.brand');
+
+    
+//     if (imageParam === null || titleParam === null || isNaN(priceParam) || brandParam === null) {
+//         console.error('Missing or invalid query parameters.');
+//         return;
+//     }
+//     productsImage.src = imageParam;
+//     productsTitle.textContent = titleParam;
+//     productsPrice.textContent = `Price: $${priceParam.toFixed(2)}`;
+//     productsBrand.textContent = brandParam;
+// });
+
+// const addToCartButton = document.getElementById('addToCartBtn');
+// addToCartButton.addEventListener('click',()=>{
+//     document.addEventListener('DOMContentLoaded', () => {
+//         const cart = getCart(); 
+
+//         const product = {
+//             image: imageParam,
+//             title: titleParam,
+//             price: priceParam,
+//             brand: brandParam
+//         };
+
+//         cart.push(product); 
+
+//         saveCart(cart); 
+
+//         alert('Product added to cart!');
+//     });
+// });
+
+// function getCart() {
+//     const cartJSON = localStorage.getItem('cart');
+//     return cartJSON ? JSON.parse(cartJSON) : [];
+// }
+
+// function saveCart(cart) {
+//     localStorage.setItem('cart', JSON.stringify(cart));
+// }
+
+
+
+
+//     function displayProductDetails(product) {
+//     if (product) {
+//         const productInfo = document.createElement('div');
+//         productInfo.innerHTML = `
+//             <h2>${product.name}</h2>
+//             <p>${product.description}</p>
+//              Other product details...  //         `;
+//         productDetails.appendChild(productInfo);
+//     }
+// }
+
+// const selectedProduct = getProductDetailsFromUrl();
+// displayProductDetails(selectedProduct);
+ // } -->
+<!-- </script>
+</body>
+</html> --> 
