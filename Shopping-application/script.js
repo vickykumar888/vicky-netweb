@@ -1,4 +1,4 @@
-
+document.addEventListener('DOMContentLoaded', () => {
 const apiURL = "https://dummyjson.com/products";
 let limit = 8;
 let currentPage = 1;
@@ -128,7 +128,7 @@ productsPerPageDropdown.addEventListener('change', () => {
   toProducts(currentPage);
 });
 fetchProducts();
-
+});
 
 
 
