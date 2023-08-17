@@ -1,4 +1,4 @@
-function fileExtension(fileName){
+function fileExtension(fileName) {
     const file = fileName.split('.').pop();
     return file;
 }
