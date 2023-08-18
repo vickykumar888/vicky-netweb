@@ -1,0 +1,16 @@
+*{
+    text-align: center;
+}
+
+#withdrawalAmount{
+    padding: 8px;
+}
+button{
+    padding: 8px;
+    margin-left: 5px;
+}
+#withdrawalTable table {
+    align-items: center;
+    width: 20%;
+    margin: auto;
+}
