@@ -14,3 +14,18 @@ button{
     width: 20%;
     margin: auto;
 }
+#newOutputDiv{
+    margin-bottom: 50px;
+}
+a{
+    text-decoration: none;
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 8px;
+    color: rgb(24, 128, 93);
+}
+#notesTable{
+    /* text-align: center; */
+    margin-left: 40%;
+    margin-bottom: 50px;
+}

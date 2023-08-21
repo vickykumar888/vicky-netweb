@@ -1,0 +1,9 @@
+#transationDiv ul li a{
+text-decoration: none;
+color: #333334;
+
+}
+#transationDiv ul li{
+    padding: 5px;
+    list-style-type: none;
+}
