@@ -15,7 +15,7 @@ button{
     margin: auto;
 }
 #newOutputDiv{
-    margin-bottom: 50px;
+    margin-bottom: 10px;
 }
 a{
     text-decoration: none;
@@ -28,4 +28,5 @@ a{
     /* text-align: center; */
     margin-left: 40%;
     margin-bottom: 50px;
+    margin-left: 44%;
 }

@@ -1,5 +1,3 @@
-const newoutputDiv = document.getElementById('newOutputDiv')
-const confirmBtn = document.getElementById('confirmWithdrawal')
 const outputDiv = document.getElementById('outputDiv')
 
 const data = {
@@ -13,13 +11,15 @@ const data = {
   5: 600,
 }
 
-const Data = JSON.stringify(data)
-localStorage.setItem('money', Data)
+const Data = JSON.stringify(data);
+localStorage.setItem('money', Data);
 const balance = parseInt(localStorage.getItem('money'));
 
 const sum = Object.entries(data).reduce((acc, [key, value]) => acc + (parseInt(key) * value), 0);
 localStorage.setItem('totalMoney', sum);
-const storedTotalMoney = parseInt(localStorage.getItem('totalMoney'))||Data;
+let storedTotalMoney = parseInt(localStorage.getItem('totalMoney'))||Data;
+
+
 
 
 

@@ -1,6 +1,7 @@
 #transationDiv ul li a{
 text-decoration: none;
 color: #333334;
+cursor: pointer;
 
 }
 #transationDiv ul li{
