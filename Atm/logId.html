@@ -5,14 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log Details</title>
     <style>
+        *{
+            text-align: center;
+        }
         table {
             border-collapse: collapse;
-            width: 100%;
+            width: 30%;
+            margin-left: 38%;
         }
         th, td {
             border: 1px solid black;
             padding: 8px;
             text-align: left;
+            text-align: center;
         }
         th {
             background-color: #f2f2f2;
@@ -20,10 +25,13 @@
     </style>
 </head>
 <body>
-    <h2>Log Details</h2>
-    <table>
-        <tbody id="logTableBody"></tbody>
-    </table>
+   <div id="logIdDiv"></div>
+   <table id="data-table">
+    <tr>
+        <th>Notes</th>
+        <th>Value</th>
+    </tr>
+</table>
     <script src="logId.js"></script>
 </body>
 </html>

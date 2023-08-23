@@ -1,6 +1,11 @@
-const transationDiv = document.getElementById('transationDiv')
-function showTransactions(logId) {
+
+const transationDiv = document.getElementById('transationDiv');
+
+function showTransactions(logId, amount,timestamp) {
     localStorage.setItem('selectedLogId', logId);
+    localStorage.setItem('selectedAmountWithdraw',amount);
+    localStorage.setItem('selectedTimeStamp',timestamp);
+    
     window.location.href = 'logId.html';
 }
 function renderTransactionLog() {
@@ -16,18 +21,11 @@ function renderTransactionLog() {
         const logLink = document.createElement('a');
         logLink.textContent = `Log ID : ${log.id}`;
         logLink.href = '#';
-        logLink.addEventListener('click', () => showTransactions(log.id));
+        logLink.addEventListener('click', () => showTransactions(log.id,log.amount,log.timestamp));
         logItem.appendChild(logLink);
         logList.appendChild(logItem);
     });
     transationDiv.appendChild(logList);
 }
 renderTransactionLog();
-
-
-
-
-
-
-
 
