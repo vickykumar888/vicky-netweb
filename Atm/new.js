@@ -46,57 +46,58 @@ function updateBalance(amount) {
         alert("Insufficient balance for withdrawal.");
         return;
     }
-
+    let updatedOriginalNotes = {};
     const withdrawalTable = document.getElementById('withdrawalTable');
     const logs = JSON.parse(localStorage.getItem('withdrawalLogs')) || [];
     logs.push({
         amount: amount,
         timestamp: new Date().toLocaleString(),
-        id: new Date().getTime()
+        id: new Date().getTime(),
+       
+        
     });
     localStorage.setItem('withdrawalLogs', JSON.stringify(logs));
-    
+
     const notes = JSON.parse(localStorage.getItem('money')) || {};
     let remainingAmount = amount;
 
     const notesBeforeTransaction = { ...notes };
 
 
-const sortedNotes = Object.keys(notes).sort((a, b) => b - a);
+    const sortedNotes = Object.keys(notes).sort((a, b) => b - a);
 
-for (const note of sortedNotes) {
-    const noteValue = parseInt(note);
-    if (noteValue <= remainingAmount && notes[note] > 0) {
-        const noteCount = Math.min(Math.floor(remainingAmount / noteValue), notes[note]);
-        notes[note] -= noteCount;
-        remainingAmount -= noteCount * noteValue;
+    for (const note of sortedNotes) {
+        const noteValue = parseInt(note);
+        if (noteValue <= remainingAmount && notes[note] > 0) {
+            const noteCount = Math.min(Math.floor(remainingAmount / noteValue), notes[note]);
+            notes[note] -= noteCount;
+            remainingAmount -= noteCount * noteValue;
+        }
+        if (remainingAmount === 0) {
+            break;
+        }
     }
-    if (remainingAmount === 0) {
-        break;
-    }
-}
 
-localStorage.setItem('money', JSON.stringify(notes));
+    localStorage.setItem('money', JSON.stringify(notes));
 
-localStorage.setItem('originalNotes', JSON.stringify(notesBeforeTransaction));
+    localStorage.setItem('originalNotes', JSON.stringify(notesBeforeTransaction));
 
-const storedOriginalNotes = JSON.parse(localStorage.getItem('originalNotes'));
-const storedUpdatedNotes = JSON.parse(localStorage.getItem('money'));
-const originalNote = Object.keys(storedOriginalNotes);
-const updatedNote = Object.keys(storedUpdatedNotes);
-const originalNoteCounts = Object.values(storedOriginalNotes);
-const updatedNoteCounts = Object.values(storedUpdatedNotes);
-const newOriginalNoteCounts = originalNoteCounts.map((count, index) => {
-    return count - updatedNoteCounts[index];
-});
+    const storedOriginalNotes = JSON.parse(localStorage.getItem('originalNotes'));
+    const storedUpdatedNotes = JSON.parse(localStorage.getItem('money'));
+    const originalNote = Object.keys(storedOriginalNotes);
+    const updatedNote = Object.keys(storedUpdatedNotes);
+    const originalNoteCounts = Object.values(storedOriginalNotes);
+    let updatedNoteCounts = Object.values(storedUpdatedNotes);
+    const newOriginalNoteCounts = originalNoteCounts.map((count, index) => {
+        return count - updatedNoteCounts[index];
+    });
 
-const updatedOriginalNotes = {};
+    originalNote.forEach((value, index) => {
+        updatedOriginalNotes[value] = newOriginalNoteCounts[index];
+    });
+    
 
-originalNote.forEach((value, index) => {
-    updatedOriginalNotes[value] = newOriginalNoteCounts[index];
-});
-
-localStorage.setItem('originalNotes', JSON.stringify(updatedOriginalNotes));
+    localStorage.setItem('originalNotes', JSON.stringify(updatedOriginalNotes));
 
     totalAmountCell.textContent = amount;
     notesTable.classList.remove("hidden");
@@ -107,7 +108,15 @@ localStorage.setItem('originalNotes', JSON.stringify(updatedOriginalNotes));
 
     let tableHtml = '<h3>Withdrawal Summary</h3>';
     tableHtml += `<tr><td>Total Balance :  </td><td>${newBalance}</td></tr>`;
+    tableHtml += '<tr><td>Updated Notes :</td><td>';
+    for (const note in updatedOriginalNotes) {
+        tableHtml += `${note}: ${updatedOriginalNotes[note]}<br>`;
+    }
+    tableHtml += '</td></tr>';
+   
     withdrawalTable.innerHTML = tableHtml;
+
+   
 
     document.getElementById('withdrawalAmount').value = '';
 }

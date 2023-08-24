@@ -1,14 +1,16 @@
-#transationDiv ul li a{
-text-decoration: none;
-color: #333334;
-cursor: pointer;
+#transationDiv ul li a {
+    text-decoration: none;
+    color: #333334;
+    cursor: pointer;
 
 
 }
-#transationDiv ul li{
+
+#transationDiv ul li {
     padding: 5px;
     list-style-type: none;
 }
-#transationDiv{
+
+#transationDiv {
     margin-left: 38%;
 }

@@ -17,7 +17,7 @@ const balance = parseInt(localStorage.getItem('money'));
 
 const sum = Object.entries(data).reduce((acc, [key, value]) => acc + (parseInt(key) * value), 0);
 localStorage.setItem('totalMoney', sum);
-let storedTotalMoney = parseInt(localStorage.getItem('totalMoney'))||Data;
+let storedTotalMoney = parseInt(localStorage.getItem('totalMoney')) || Data;
 
 
 
