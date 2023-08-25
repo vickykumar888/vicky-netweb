@@ -9,8 +9,12 @@
 #transationDiv ul li {
     padding: 5px;
     list-style-type: none;
+    margin-left: 40.5%;
 }
 
-#transationDiv {
-    margin-left: 38%;
+#transationDiv h2 {
+    margin-left: 42%;
+}
+button{
+    margin-left: 45%;
 }

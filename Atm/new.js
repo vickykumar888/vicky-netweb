@@ -1,7 +1,6 @@
 const outputDiv = document.getElementById('newOutputDiv');
 const notesTable = document.getElementById('notesTable');
 const totalAmountCell = document.getElementById('totalAmountCell');
-
 function renderNewWithdrawal() {
     outputDiv.innerHTML = `
       <h2>New Withdrawal</h2>
@@ -10,7 +9,6 @@ function renderNewWithdrawal() {
       <div id="withdrawalTable"></div>
     `;
 }
-
 function confirmTransaction() {
     const withdrawalAmount = parseInt(document.getElementById('withdrawalAmount').value, 10);
     if (isNaN(withdrawalAmount) || withdrawalAmount <= 0) {
@@ -47,23 +45,9 @@ function updateBalance(amount) {
         return;
     }
     let updatedOriginalNotes = {};
-    const withdrawalTable = document.getElementById('withdrawalTable');
-    const logs = JSON.parse(localStorage.getItem('withdrawalLogs')) || [];
-    logs.push({
-        amount: amount,
-        timestamp: new Date().toLocaleString(),
-        id: new Date().getTime(),
-       
-        
-    });
-    localStorage.setItem('withdrawalLogs', JSON.stringify(logs));
-
     const notes = JSON.parse(localStorage.getItem('money')) || {};
     let remainingAmount = amount;
-
     const notesBeforeTransaction = { ...notes };
-
-
     const sortedNotes = Object.keys(notes).sort((a, b) => b - a);
 
     for (const note of sortedNotes) {
@@ -79,7 +63,6 @@ function updateBalance(amount) {
     }
 
     localStorage.setItem('money', JSON.stringify(notes));
-
     localStorage.setItem('originalNotes', JSON.stringify(notesBeforeTransaction));
 
     const storedOriginalNotes = JSON.parse(localStorage.getItem('originalNotes'));
@@ -91,13 +74,10 @@ function updateBalance(amount) {
     const newOriginalNoteCounts = originalNoteCounts.map((count, index) => {
         return count - updatedNoteCounts[index];
     });
-
     originalNote.forEach((value, index) => {
         updatedOriginalNotes[value] = newOriginalNoteCounts[index];
     });
-    
 
-    localStorage.setItem('originalNotes', JSON.stringify(updatedOriginalNotes));
 
     totalAmountCell.textContent = amount;
     notesTable.classList.remove("hidden");
@@ -106,18 +86,24 @@ function updateBalance(amount) {
     localStorage.setItem('totalMoney', newBalance);
     alert(`Withdrawal successful! New balance: ${newBalance}`);
 
+    const withdrawalTable = document.getElementById('withdrawalTable');
+    const logs = JSON.parse(localStorage.getItem('withdrawalLogs')) || [];
+    logs.push({
+        amount: amount,
+        timestamp: new Date().toLocaleString(),
+        id: new Date().getTime(),
+        updatedOriginalNotes: { ...updatedOriginalNotes },
+    });
+    localStorage.setItem('withdrawalLogs', JSON.stringify(logs));
+
     let tableHtml = '<h3>Withdrawal Summary</h3>';
-    tableHtml += `<tr><td>Total Balance :  </td><td>${newBalance}</td></tr>`;
-    tableHtml += '<tr><td>Updated Notes :</td><td>';
+    tableHtml += `<tr><td>Total Balance :  </td><td>${newBalance}</td></tr><br>`;
+    tableHtml += '<tr><td>Updated Notes :</td><td><br>';
     for (const note in updatedOriginalNotes) {
         tableHtml += `${note}: ${updatedOriginalNotes[note]}<br>`;
     }
     tableHtml += '</td></tr>';
-   
     withdrawalTable.innerHTML = tableHtml;
-
-   
-
     document.getElementById('withdrawalAmount').value = '';
 }
 renderNewWithdrawal();

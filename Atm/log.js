@@ -1,18 +1,15 @@
-
 const transationDiv = document.getElementById('transationDiv');
-
-function showTransactions(logId, amount, timestamp, updatedNotes) {
+function showTransactions(logId, amount, timestamp, updatedOriginalNotes) {
     localStorage.setItem('selectedLogId', logId);
     localStorage.setItem('selectedAmountWithdraw', amount);
     localStorage.setItem('selectedTimeStamp', timestamp);
-   
+    localStorage.setItem('updatedOriginalNotes', JSON.stringify(updatedOriginalNotes));
     window.location.href = 'logId.html';
 }
-
 function renderTransactionLog() {
-    transationDiv.innerHTML = '<h2>Transaction Log</h2>';
+    transationDiv.innerHTML = `<h2>Transaction Log</h2>
+    <button onclick="history.back()">Go Back</button>`
     const logs = JSON.parse(localStorage.getItem('withdrawalLogs')) || [];
-    console.log(logs)
     if (logs.length === 0) {
         transationDiv.innerHTML += '<p>No transaction logs available.</p>';
         return;
@@ -23,7 +20,8 @@ function renderTransactionLog() {
         const logLink = document.createElement('a');
         logLink.textContent = `Log ID : ${log.id}`;
         logLink.href = '#';
-        logLink.addEventListener('click', () => showTransactions(log.id, log.amount, log.timestamp,));
+        logLink.addEventListener('click', () => showTransactions(log.id, log.amount, log.timestamp, log.updatedOriginalNotes));
+        // console.log("first",log.updatedOriginalNotes)
         logItem.appendChild(logLink);
         logList.appendChild(logItem);
     });
