@@ -21,7 +21,7 @@ function renderTransactionLog() {
         logLink.textContent = `Log ID : ${log.id}`;
         logLink.href = '#';
         logLink.addEventListener('click', () => showTransactions(log.id, log.amount, log.timestamp, log.updatedOriginalNotes));
-        // console.log("first",log.updatedOriginalNotes)
+        // console.log("first",log.upd
         logItem.appendChild(logLink);
         logList.appendChild(logItem);
     });
