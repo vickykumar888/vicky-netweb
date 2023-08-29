@@ -1,19 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-
 <body>
-    <input type="file" id="inputImage">
-    <button onclick="convertImageToBase64()">Convert!</button>
+    <input id="inputImage" type="file" accept="image" onchange="imagePreview(event)">
     <div>
-        <textarea id="outputDiv" rows="20" cols="30"></textarea>
+        <img src="" alt="Image" id="outputImage" width="240px" height="240px">
     </div>
-    <script src="ImageToBase64.js"></script>
+    <script src="imagePreview.js"></script>
 </body>
-
 </html>
