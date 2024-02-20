@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello world!</h1>
+    <script>
+// variables :
+// let is block scoped
+let name = "pooja";
+console.log(name);
+
+ const animal = ("dog")
+console.log(animal);
+
+// var is global
+//  scope and is acessible outside curly braces also
+var  a =10;
+function add(){
+    console.log(a);
+}
+add();
+
+// immediately involed functions
+(function invokedFun(){
+    console.log("this is immediately invoked function");
+}
+)();
+// object:key value pair
+let obj ={
+    name :"pooja",
+    age:21
+}
+//array
+let arr = ["pooja" ,23,true , "chauhan"]
+console.log(arr);
+// normal function
+function calculation(){
+    console.log(3+5);
+}
+calculation();
+// fat arrow function:compact way of defining a function
+const multiply = (num1, num2) => {
+  const result = num1 * num2
+  return result
+}
+console.log(multiply(2,4))
+
+    </script>
+</body>
+</html>
