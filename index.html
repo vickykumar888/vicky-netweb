@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <h1>JS tasks</h1>
+   <script>
+    // operators 1)arthematic operstor +,-,*,/,**/++/--/%
+    let a =10;
+    let b =20;
+    console.log(a+b);
+    
+    function calculation(){
+        console.log(5-2)
+    }
+    calculation();
+    // 2)comparasion operator <,>,==,===,!=,!==,<=,>=
+    let num1 =10;
+    let num2=20;
+    console.log(num1>num2);
+
+let val1 = "21";
+let val2 =21;
+console.log(val1===val1)
+// logical operators &&,||,!
+// && if both are true
+let marks =80;
+if(marks===80 && marks<80){
+    console.log("grade a");
+}
+else{
+    console.log("work hard");
+}
+// || if even one is true
+let markss =80;
+if(markss===80 || markss<80){
+    console.log("grade a");
+}
+else{
+    console.log("work hard");
+}
+// ! retrun opp true if false and false if true
+console.log(20>200)
+// ternary operator another way of if else but smaller
+let age = 18;
+function checkadult() {
+    return age ? "can vote" : "cannot vote";
+}
+console.log(checkadult());
+// loops for loop
+for(let i=0;i<=10;i++){
+    console.log(i)
+}
+// do while loop
+let cars = ["bmw", "lamborghini", "suv"];
+let i = 0; 
+
+do {
+    console.log("New car: " + cars[i]); 
+    i++; 
+} while (i < cars.length);
+// while
+let heros = ["hulk","superman","shaktiman"];
+
+let j=0;
+while (j < heros.length){
+    console.log("hero: " + heros[j]); 
+    j++; 
+    
+}
+// for each;
+let fruits = ["apple","anar","sitafl","banana"];
+fruits.forEach(element => {
+    console.log(element);
+});
+// if else
+let number =10;
+if(number==10){
+    console.log("entered num");
+}
+else{
+    console.log("not entered");
+}
+ let fruittype = prompt("Please enter a fruit");
+
+switch (fruittype) {
+    case "banana":
+        console.log("Cost of banana is 511");
+        break;
+    case "apple":
+        console.log("Cost of apple is 411");
+        break;
+    default:
+        console.log("Fruit not available");
+}
+// for of;
+let citits = ["delhi","mumbai","amritsar"]
+for(let city in cities){
+    console.log(city);
+}
+
+
+
+   </script> 
+</body>
+</html>
