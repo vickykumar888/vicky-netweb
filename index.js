@@ -1,45 +1,70 @@
-console.log("my first cosnole in js");
-// var, let, const 
+// array method
+// map method
+const array = [{ name: 'sunny', age: 23 }]
+array.map((item, index) => {
+  return (
+    <p key={index}>{item}</p>
+  )
+})
+// filter method
+const ages = [32, 33, 16, 40];
+const result = ages.filter(checkAdult);
+function checkAdult(age) {
+  return age >= 18;
+}
+console.log(result)//32,33,40
 
-// reinitialize
-let a = 10;
- console.log(a);
-  x = 15;
-console.log(a);
-// let can be reassigned but not reinitialize 
+//  reduce method
+const number = [1, 2, 3, 4, 5, 6]
+const sum = number.reduce((acc, item) => {
+  return (
+    acc + item
+  )
+})
+console.log(sum)//21
 
-// while using const 
-// const b = 7;
-// console.log(b);
-// b = 6;
+// every method
+const age = [32, 33, 16, 40];
 
-// console.log(a)
-// this will throw an error because const can't be reassigned and reinitialize
+ages.every(checkAge)
 
-var c = 9;
-var c = 31;
-console.log(c)
-c = 50;
-// this will not throw any error
+function checkAge(age) {
+  return age > 18;
+}  // false because every() returns true if all elements in an array pass a test provided as a function.
 
-//hoisting 
+// spread operator
 
-// var and function show hosting but let and const due to not having global contex eg
-console.log(zz);
-var zz = 10;
-// output undefined ; 
+function sum(x, y, z) {
+  return x + y + z;
+}
+const numbers = [1, 2, 3];
 
-// console.log(zzz)
-// let zzz = 11;
-// output refrence error 
+console.log(sum(...numbers));
+// Expected output: 6
 
-// console.log(w);
-// const w = 87
-// output refrence error
+console.log(sum.apply(null, numbers));
+// Expected output: 6
 
-sum(7,8);
-function sum (a,b){
-    console.log( a+b)
+// push method
+
+const fruits = ["Banana", "Orange", "Apple", "Mango"];
+fruits.push("Kiwi", "Lemon");
+
+// Banana,Orange, Apple, Mango,Kiwi,Lemon
+
+// pop method
+const cars = ["Banana", "Orange", "Apple", "Mango"];
+cars.pop(); 
+//  pop() returns the element it removed:
+Mango
+
+// find method
+const adultAge = [3, 10, 18, 20];
+
+function checkAge(age) {
+  return age > 18;
 }
 
-//output 15 no error because of hosting 
+// find() returns the value of the first element in an array that passes a test (provided by a function):
+
+20
