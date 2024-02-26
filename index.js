@@ -42,4 +42,16 @@ function sum (a,b){
     console.log( a+b)
 }
 
-//output 15 no error because of hosting 
+// //output 15 no error because of hosting 
+// let a = 100;
+// for (let i = 0; i < a; i++) {
+//     if (i % 2 == 0) {
+//         console.log("All even numbers 1 to 100", i)
+//     }
+// }
+
+// function convert(mintues) {
+//     let seconds = mintues * 60
+//     return seconds
+// }
+// console.log(convert(5))
