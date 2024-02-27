@@ -1,45 +1,57 @@
-console.log("my first cosnole in js");
-// var, let, const 
-
-// reinitialize
-let a = 10;
- console.log(a);
-  x = 15;
-console.log(a);
-// let can be reassigned but not reinitialize 
-
-// while using const 
-// const b = 7;
-// console.log(b);
-// b = 6;
-
-// console.log(a)
-// this will throw an error because const can't be reassigned and reinitialize
-
-var c = 9;
-var c = 31;
-console.log(c)
-c = 50;
-// this will not throw any error
-
-//hoisting 
-
-// var and function show hosting but let and const due to not having global contex eg
-console.log(zz);
-var zz = 10;
-// output undefined ; 
-
-// console.log(zzz)
-// let zzz = 11;
-// output refrence error 
-
-// console.log(w);
-// const w = 87
-// output refrence error
-
-sum(7,8);
-function sum (a,b){
-    console.log( a+b)
+// call , apply ,bind method
+let person1 = {
+  firstName: "john",
+  lastName: 'kuperman',
+  fullName: function (home, country) {
+    return this.firstName + " " + this.lastName + " " + home + " " + country
+  }
 }
+let person2 = {
+  firstName: 'kelly',
+  lastName: 'bist'
 
-//output 15 no error because of hosting 
+}
+console.log(person1.fullName.call(person2, "gujrat", "india"))
+console.log(person1.fullName.apply(person2, ["gujrat", "india"]))
+let result = person1.fullName.bind(person2, "gujrat", "india")
+console.log(result)
+console.log(result())
+
+let obj = {
+  name: "herry",
+  greet: function (lastName) {
+    return this.name + " " + lastName
+  }
+}
+let obj2 = {
+  name: "Rishi"
+}
+console.log(obj.greet.call(obj2, "Sharma"))
+console.log(obj.greet.apply(obj, ["Sharma"]))
+
+// bind method
+
+let country1 = {
+  name: "india",
+  greet: function () {
+    return this.name
+  }
+}
+let country2 = {
+  name: "china",
+}
+let countryName = country1.greet.bind(country2)
+// console.log(countryName)
+console.log(countryName())
+
+// apply method
+const person = {
+  name: 'mohan',
+  lastName: 'roy',
+}
+function greet(greeting, message) {
+  return `${greeting} ${this.name} ${message}`
+
+}
+let res = greet.apply(person, ['hello', 'How are you'])
+console.log(res)
