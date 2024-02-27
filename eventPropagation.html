@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Bubbling Example</title>
+    <style>
+       
+    </style>
+</head>
+<body>
+    <div class = "div" >Div element 
+        <span class = "span" >span element 
+          <button class="btn">click me</button>
+        </span> 
+     </div> 
+
+    <script>
+    const div  = document.querySelector(".div");
+    const span  = document.querySelector(".span");
+    const btn   = document.querySelector(".btn");
+
+    div.addEventListener("click",function(e){
+        alert("div clicked")
+        e.stopPropagation();
+    })
+
+    span.addEventListener("click",function(e){
+        alert("span clicked")
+        e.stopPropagation();
+    })
+    btn.addEventListener("click",function(e){
+        alert("btn clicked")
+        e.stopPropagation();
+    })
+
+
+
+    </script>
+</body>
+</html>
