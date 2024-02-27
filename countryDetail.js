@@ -1,4 +1,4 @@
-const country = [
+const countries = [
     { serialNo: 1, country: 'Afghanistan', population: 42239854, landArea: 652860, density: 65 },
     { serialNo: 2, country: "Albania", population: 2832439, landArea: 27400, density: 103 },
     { serialNo: 3, country: "Algeria", population: 45606480, landArea: 2381740, density: 19 },
@@ -17,5 +17,14 @@ const country = [
     { serialNo: 16, country: "Belarus", population: 9498238, landArea: 202910, density: 47 },
 ]
 
-const newArr=country.map((item)=>item)
+const newArr = countries.map((item) => item)
 console.log(newArr)
+
+
+
+countries.forEach((countryDetail) => {
+    let sentence = `serialNo:${countryDetail.serialNo} country:${countryDetail.country} population:${countryDetail.population} 
+  landArea:${countryDetail.landArea} density:${countryDetail.density}`
+    console.log(sentence)
+})
+
