@@ -39,5 +39,59 @@ let averageGradesGirls = () =>{
 }
 console.log(averageGradesGirls());
 
-//
+// highest grade 
+let highestGrades = () => {
+    return (Math.max(...students.map((students) => students.grade)))
+}
 
+console.log(highestGrades());
+
+// highest grade for boys 
+
+let highestGradesBoys = () => {
+    return (Math.max(...students.filter((students) => students.gender === 'M')
+    .map((students) => students.grade)))
+}
+
+console.log(highestGradesBoys());
+
+
+// highest grade for girls  
+
+let highestGradesGirls = () => {
+    return (Math.max(...students.filter((students) => students.gender === 'F')
+    .map((students) => students.grade)))
+}
+
+console.log(highestGradesGirls());
+
+// total grades 
+
+let totalGrades = () => {
+    return (students.reduce((acc, curr) => acc + curr.grade, 0));
+}
+console.log(totalGrades());
+
+// unique grades 
+
+// const onlyGrades = () =>{
+//     return [...new Set(students.map((students) => students.grade))]
+// }
+// console.log(onlyGrades()); 
+
+// const onlyGrades = ()=>{
+//     let array =[]
+//     array.push(students.map((students)=> students.grade))
+//     return array;
+// }
+
+// console.log(onlyGrades())
+
+
+// passing students
+
+let passingStudent = (passingMarks) =>{
+    return (students.filter((student) => student.grade > passingMarks))
+}
+
+console.log(passingStudent(7));
