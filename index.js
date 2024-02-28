@@ -14,7 +14,7 @@ let person2 = {
 console.log(person1.fullName.call(person2, "gujrat", "india"))
 console.log(person1.fullName.apply(person2, ["gujrat", "india"]))
 let result = person1.fullName.bind(person2, "gujrat", "india")
-g console.log(result)
+console.log(result)
 console.log(result())
 
 let obj = {
