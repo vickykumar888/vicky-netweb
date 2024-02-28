@@ -14,7 +14,7 @@ let person2 = {
 console.log(person1.fullName.call(person2, "gujrat", "india"))
 console.log(person1.fullName.apply(person2, ["gujrat", "india"]))
 let result = person1.fullName.bind(person2, "gujrat", "india")
-console.log(result)
+g console.log(result)
 console.log(result())
 
 let obj = {
@@ -50,8 +50,18 @@ const person = {
   lastName: 'roy',
 }
 function greet(greeting, message) {
-  return `${greeting} ${this.name} ${message}`
+  return ` ${greeting} ${this.name} ${message} `
 
 }
 let res = greet.apply(person, ['hello', 'How are you'])
 console.log(res)
+
+ let student={
+  name:"sahil",
+  section :"1"
+ }
+ function detail(sec){
+    return `${this.name} ${sec}  ${this.section}`
+ }
+ let newObj=detail.call(student,"your section is")
+ console.log(newObj)
