@@ -10,10 +10,13 @@ class Aninmal {
 
 
 let husky = new Aninmal("leo", "Wolf");
+console.log(husky, "husky")
 
 class speciesData extends Aninmal {
     speed= "100"
 }
 
+
 let newData = new speciesData("browny", "dog");
-console.log(newData.speed,"data");
+console.log(newData, "new")
+// console.log(newData.speed,"data");
