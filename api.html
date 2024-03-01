@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API</title>
+    <style>
+        h1 {
+            text-align: center;
+            padding: 20px;
+        }
+        .article {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 20px;
+        }
+        .article h2 {
+            margin-top: 0;
+        }
+        .article p {
+            margin-bottom: 5px;
+        }
+        .btn {
+            padding: 13px 26px;
+            background-color: #111;
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            display: block;
+            margin-top: 20px;
+        }
+        .image {
+            height: 400px;
+            width: 400px;
+            border-radius: 13px;
+        }
+        .container {
+            margin: auto;
+            width: 80%;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>NEWS API</h1>
+    <div class="container">
+        <div id="news"></div>
+    </div>
+
+    <script>
+        async function fetchNews() {
+            const url = "https://newsapi.org/v2/everything?q=tesla&from=2024-02-01&sortBy=publishedAt&apiKey=2ccfd7f9cf6b4f65bc3350615eb61ed2";
+            const response = await fetch(url);
+            const data = await response.json();
+            return data.articles;
+            // console.log(data);
+            // console.log(data.articles);
+        }
+
+        async function displayNews() {
+            const articles = await fetchNews();
+            const newsContainer = document.getElementById("news");
+            
+            articles.forEach(news => {
+                // console.log(news);
+                let articleDiv = document.createElement("div");
+                articleDiv.classList.add("article");
+
+                let newHeading = document.createElement("h2");
+                newHeading.innerHTML = news.author;
+                articleDiv.appendChild(newHeading);
+
+                let newData = document.createElement("p");
+                newData.innerHTML = news.description;
+                articleDiv.appendChild(newData);
+
+                let author = document.createElement("h2");
+                author.innerHTML = news.author;
+                articleDiv.appendChild(author);
+
+                let imageTodisplay = document.createElement("img");
+                imageTodisplay.src = news.urlToImage;
+                imageTodisplay.classList.add("image");
+                articleDiv.appendChild(imageTodisplay);
+
+                let btn = document.createElement("button");
+                btn.textContent = "Delete";
+                btn.classList.add("btn");
+                btn.addEventListener("click", function() {
+                    articleDiv.classList.toggle("hidden");
+                });
+                articleDiv.appendChild(btn);
+
+                newsContainer.appendChild(articleDiv);
+            });
+        }
+
+        displayNews();
+    </script>
+</body>
+</html>
