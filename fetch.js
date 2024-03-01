@@ -3,22 +3,22 @@ let url = "https://jsonplaceholder.typicode.com/posts";
 
 // to get the data from the Api 
 
-// let getData = async () => {
-//     try {
-//         let res = await fetch(url);
-//         if (res.ok) {
-//             let data = await res.json();
-//             console.log(data);
-//         }
-//         else {
-//             throw new Error("network error")
-//         }
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
+let getData = async () => {
+    try {
+        let res = await fetch(url);
+        if (res.ok) {
+            let data = await res.json();
+            console.log(data);
+        }
+        else {
+            throw new Error("network error")
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
-//getData();
+getData();
 
 // const getData = () => {
 //   let res = fetch(url).then((res) => res.json())
@@ -143,8 +143,10 @@ const deleteData =() =>{
     method:'DELETE'
   }).then(res => res.json())
   .then(data=> {
+  
     console.log(data)
   })
+  console.log(res);
 }
 
 deleteData();
