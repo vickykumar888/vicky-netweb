@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+          table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+        .btn {
+  padding: 10px 23px;
+  border: none;
+  background: #111;
+  color: #fff;
+  border-radius: 23px;
+}
+
+    </style>
+</head>
+<body>
+ <div class="container">
+    <table>
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Body</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody class="container-item">
+
+        </tbody>
+    </table>
+ </div>
+
+    <script>
+        async function fetchNews() {
+            const url = "https://jsonplaceholder.typicode.com/posts"; 
+            const response = await fetch(url);
+            const data = await response.json();
+            return data;
+        }
+
+        async function showOutput(){
+            const data = await fetchNews(); 
+            const container = document.querySelector(".container-item");
+
+            data.forEach(item => {
+                const elemTr = document.createElement("tr");
+
+                const elemUserId = document.createElement("td");
+                elemUserId.textContent = item.userId;
+                elemTr.appendChild(elemUserId);
+
+                const elemId = document.createElement("td");
+                elemId.textContent = item.id;
+                elemTr.appendChild(elemId);
+
+                const elemTitle = document.createElement("td");
+                elemTitle.textContent = item.title;
+                elemTr.appendChild(elemTitle);
+
+                const elemBody = document.createElement("td");
+                elemBody.textContent = item.body;
+                elemTr.appendChild(elemBody);
+
+                const btn = document.createElement("button");
+                btn.classList.add("btn")
+                btn.innerText = "Delete";
+                
+                btn.addEventListener("click",function(){
+                    deletePost(item.id, elemTr);
+                    btn.innerHTML="deleted &#10004"
+                })
+                
+                const actionTd = document.createElement("td"); 
+                actionTd.appendChild(btn);
+                elemTr.appendChild(actionTd);
+
+                container.appendChild(elemTr);
+            });
+        }
+
+        showOutput(); 
+
+        function deletePost(id, row) {
+            const url = `https://jsonplaceholder.typicode.com/posts/${id}`;
+            fetch(url, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (response.ok) {
+                    row.remove(); 
+                }
+            });
+        }
+    </script>
+    
+</body>
+</html>
