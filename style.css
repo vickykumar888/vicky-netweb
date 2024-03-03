@@ -1,0 +1,19 @@
+.table {
+  border: 1px solid #c5c5c5;
+  width: 80%;
+  background-color: white;
+
+  /* border-spacing: 0px; */
+  text-align: left;
+}
+.table thead,
+.table tr th  {
+  border: 1px solid #c5c5c5;
+  padding: 10px 5px;
+  text-align: left;
+}
+td {
+  border: 1px solid #c5c5c5;
+  padding: 10px 5px;
+  text-align: left;
+}
