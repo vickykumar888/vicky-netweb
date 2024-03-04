@@ -23,13 +23,28 @@
         <tbody id="data"></tbody>
       </table>
 
-     
+      <div id="myModal" class="modal">
+        <div class="modal-content">
+          <span class="close">x</span>
+          <div class="space">
+            <form id="editForm">
+              <label for="id">ID:</label>
+              <input type="text" id="id" readonly class="input"/><br>
+              <label for="title">Title:</label>
+              <input type="text" id="title" class="input"/><br>
+              <label for="brand">Brand:</label>
+              <input type="text" id="brand" class="input"/><br>
+              <label for="price">Price:</label>
+              <input type="text" id="price"class="input" /><br>
+              <label for="description">Description:</label>
+              <input type="text" id="description" class="input"/><br>
+              <button type="button" onclick="{updateItem()}" class="btn">Update</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <script src="index.js">
-     
-
-      
-    </script>
+    <script src="index.js"></script>
   </body>
 </html>

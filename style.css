@@ -1,6 +1,6 @@
 .table {
   border: 1px solid #c5c5c5;
-  width: 100%;
+  width: 95%;
   background-color: white;
   margin: auto;
 
@@ -17,4 +17,63 @@ td {
   border: 1px solid #c5c5c5;
   padding: 10px 5px;
   text-align: left;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: grey;
+  opacity: 0.9;
+  
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin:15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 25%;
+  height: 25%;
+
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  /* width:10% */
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+.space{
+  float:left;
+ display:flex;
+  /* width: 20%; */
+  justify-content: space-between;
+
+}
+.btn{
+  background-color: green;
+  padding: 10px;
+border:none;
+  color: white;
+}
+.delete{
+  background-color: red;
+}
+.input{
+  padding: 8px;
+  margin-top: 10px;
+  
 }
