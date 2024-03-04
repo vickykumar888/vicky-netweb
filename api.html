@@ -38,6 +38,11 @@
             margin: auto;
             width: 80%;
         }
+        #news {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 61px;
+}
         .hidden {
             display: none;
         }
@@ -51,7 +56,8 @@
 
     <script>
         async function fetchNews() {
-            const url = "https://newsapi.org/v2/everything?q=tesla&from=2024-02-01&sortBy=publishedAt&apiKey=2ccfd7f9cf6b4f65bc3350615eb61ed2";
+            const url = "https://newsapi.org/v2/everything?q=tesla&from=2024-02-04&sortBy=publishedAt&apiKey=2ccfd7f9cf6b4f65bc3350615eb61ed2"
+
             const response = await fetch(url);
             const data = await response.json();
             return data.articles;
