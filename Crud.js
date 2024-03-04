@@ -24,11 +24,12 @@ function createTable(item) {
 
     const row = document.createElement('tr')
 
-    // const imageCell = document.createElement('td')
 
-    // const image = document.createElement('img')
-    // image.innerHTML = item.images
-    // imageCell.appendChild(image)
+
+    const image = document.createElement('img')
+    image.id ="image"
+    image.src = item.images[0]
+    
 
     const title = document.createElement('td')
     title.className = "table-data"
@@ -62,6 +63,7 @@ function createTable(item) {
     button.innerHTML = "Delete"
 
     table.appendChild(row)
+    row.appendChild(image)
     row.appendChild(brand)
     row.appendChild(title)
     row.appendChild(desc)
@@ -70,7 +72,7 @@ function createTable(item) {
 }
 
 function display(items) {
-    items.products.forEach(item => {
+    items.products.map(item => {
         createTable(item);
     });
 }
