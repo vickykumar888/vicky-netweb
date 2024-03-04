@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table,th,td{
+            border: 1px solid gray;
+        }
+        
+        .container{
+            display: flex;
+            justify-content: center;
+        }
+        
+    </style>
+</head>
+<body>
+    <button id="button_click">Click Here</button>
+    <div class="container">
+
+    <table id="data_table">
+        <thead>
+            <tr>
+                <th>UserName</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<div style="margin-top: 20px ;">
+    <label for="name">Name</label>
+    <input type="text" id="name" autocomplete="off"/><br/><br/>
+    <label for="email">Email</label>
+
+    <input type="text" id="email" autocomplete="off"/><br/>
+
+    <button id="post_data" style="margin-top: 30px; justify-content: center;">Post Data</button>
+</div>
+    <script src="./crud.js"></script>
+
+
+</body>
+</html>
