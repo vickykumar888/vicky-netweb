@@ -1,45 +1,41 @@
-console.log("my first cosnole in js");
-// var, let, const 
+const arrayOfObject = [
+  { id: Math.random(), text: "Walk the dog", textColor: "red" },
+  { id: Math.random(), text: "Prepare lunch", textColor: "green" },
+  { id: Math.random(), text: "Fix the bugs", textColor: "yellow" },
+  { id: Math.random(), text: "Code all day", textColor: "blue" },
+  { id: Math.random(), text: "Sleep", textColor: "black" },
+];
+const container = document.getElementById('container')
+arrayOfObject.map((item) => {
+  const data = document.createElement("h1")
+  data.innerHTML = item.text
+  data.style.color = item.textColor
+  // console.log(data.text)
+  // console.log("====> color", data.textColor)
+  container.appendChild(data)
+  return item.text
+})
 
-// reinitialize
-let a = 10;
- console.log(a);
-  x = 15;
-console.log(a);
-// let can be reassigned but not reinitialize 
+const inputNumber = document.getElementById("input")
+const tableNumber = document.getElementById("table")
 
-// while using const 
-// const b = 7;
-// console.log(b);
-// b = 6;
+inputNumber.addEventListener("input", () => {
+  const number = parseInt(inputNumber.value)
 
-// console.log(a)
-// this will throw an error because const can't be reassigned and reinitialize
+  if (!isNaN(number)) {
+    generateTable(number)
+  } else {
+    tableNumber.innerHTML = ""
+  }
+})
 
-var c = 9;
-var c = 31;
-console.log(c)
-c = 50;
-// this will not throw any error
 
-//hoisting 
-
-// var and function show hosting but let and const due to not having global contex eg
-console.log(zz);
-var zz = 10;
-// output undefined ; 
-
-// console.log(zzz)
-// let zzz = 11;
-// output refrence error 
-
-// console.log(w);
-// const w = 87
-// output refrence error
-
-sum(7,8);
-function sum (a,b){
-    console.log( a+b)
+function generateTable(number) {
+  // console.log("==>",number)
+  let tableHtml = "<table>"
+  for (let i = 0; i <= 10; i++) {
+    tableHtml += `<tr><td>${number}*${i}</td><td>=</td><td>${number * i}</td></tr>`
+  }
+  tableHtml += "</table>"
+  tableNumber.innerHTML = tableHtml
 }
-
-//output 15 no error because of hosting 
