@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .btn {
+            padding: 10px 23px;
+            border: none;
+            background: #111;
+            color: #fff;
+            border-radius: 23px;
+            margin: 20px;
+        }
+
+        .container-item input[type="text"] {
+            width: 100%;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <table>
+        <thead>
+        <tr>
+            <th>User ID</th>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Body</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody class="container-item">
+
+        </tbody>
+    </table>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update Post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="postId">
+                    <div class="mb-3">
+                        <!-- lk -->
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="title">
+                    </div>
+                    <div class="mb-3">
+                        <!-- lkkk -->
+                        <label for="body" class="form-label">Body</label>
+                        <textarea class="form-control" id="body" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveChanges()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    async function fetchNews() {
+        const url = "https://jsonplaceholder.typicode.com/posts";
+        const response = await fetch(url);
+        const data = await response.json();
+        return data;
+    }
+
+    async function showOutput() {
+        const data = await fetchNews();
+        const container = document.querySelector(".container-item");
+
+        data.forEach(item => {
+            const elemTr = document.createElement("tr");
+            elemTr.setAttribute("data-id", item.id);
+            const elemUserId = document.createElement("td");
+            elemUserId.textContent = item.userId;
+            elemTr.appendChild(elemUserId);
+
+            const elemId = document.createElement("td");
+            elemId.textContent = item.id;
+            elemTr.appendChild(elemId);
+
+            const elemTitle = document.createElement("td");
+            elemTitle.textContent = item.title;
+            elemTr.appendChild(elemTitle);
+
+            const elemBody = document.createElement("td");
+            elemBody.textContent = item.body;
+            elemTr.appendChild(elemBody);
+
+            const actionTd = document.createElement("td");
+            const btnDelete = document.createElement("button");
+            btnDelete.classList.add("btn");
+            btnDelete.innerText = "Delete";
+            btnDelete.addEventListener("click", function () {
+                deletePost(item.id, elemTr);
+                btnDelete.innerHTML = "Deleted &#10004;";
+            });
+            actionTd.appendChild(btnDelete);
+
+            const btnUpdate = document.createElement("button");
+            btnUpdate.classList.add("btn");
+            btnUpdate.innerText = "Update";
+            btnUpdate.setAttribute("data-bs-toggle", "modal");
+            btnUpdate.setAttribute("data-bs-target", "#exampleModal");
+            btnUpdate.addEventListener("click", function () {
+                populateModal(item.id, item.title, item.body);
+            });
+            actionTd.appendChild(btnUpdate);
+
+            elemTr.appendChild(actionTd);
+
+            container.appendChild(elemTr);
+        });
+    }
+
+    showOutput();
+
+    function populateModal(id, title, body) {
+        document.getElementById("postId").value = id;
+        document.getElementById("title").value = title;
+        document.getElementById("body").value = body;
+    }
+
+    async function saveChanges() {
+        const postId = document.getElementById("postId").value;
+        const newTitle = document.getElementById("title").value;
+        const newBody = document.getElementById("body").value;
+
+        const url = `https://jsonplaceholder.typicode.com/posts/${postId}`;
+        const requestOptions = {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                title: newTitle,
+                body: newBody
+            })
+        };
+
+        try {
+            const response = await fetch(url, requestOptions);
+            if (response.ok) {
+                const updatedData = await response.json();
+                const elemTitle = document.querySelector(`tr[data-id="${postId}"] td:nth-child(3)`);
+                const elemBody = document.querySelector(`tr[data-id="${postId}"] td:nth-child(4)`);
+                elemTitle.textContent = updatedData.title;
+                elemBody.textContent = updatedData.body;
+                $('#exampleModal').modal('hide');
+                
+            } else {
+                throw new Error('Failed to update post.');
+            }
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+    }
+
+    function deletePost(id, row) {
+        const url = `https://jsonplaceholder.typicode.com/posts/${id}`;
+        fetch(url, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (response.ok) {
+                    row.remove();
+                }
+            });
+    }
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</body>
+</html>
