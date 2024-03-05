@@ -37,8 +37,8 @@ td {
   margin:15% auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 25%;
-  height: 25%;
+  width: 28%;
+  height: 28%;
 
 }
 
@@ -75,5 +75,8 @@ border:none;
 .input{
   padding: 8px;
   margin-top: 10px;
+  
+}
+.label{
   
 }

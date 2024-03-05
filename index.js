@@ -70,7 +70,7 @@ async function editItem(id) {
   }
 }
 
-document.querySelector(".close").addEventListener("click", function () {
+document.getElementById(".close").addEventListener("click", function () {
   const modal = document.getElementById("myModal")
   modal.style.display = "none"
 })
@@ -116,7 +116,7 @@ async function updateItem() {
     // Close the modal
     const modal = document.getElementById("myModal");
     modal.style.display = "none";
-
+    console.log(modal.style.display)
   } catch (error) {
     console.error("Error updating item:", error);
   }
