@@ -59,9 +59,15 @@
 
     showOutput();
 
-    function populateModal(id, email,) {
-        document.getElementById("postId").value = id;
-        document.getElementById("email").value = email;
+    function populateModal(id) {
+        const row = document.querySelector(`tr[data-id="${id}"]`);
+    const title = row.querySelector('td:nth-child(4)').textContent;
+    document.getElementById("postId").value = id;
+    document.getElementById("email").value = title;
+    $('#exampleModal').on('hidden.bs.modal', function (e) {
+        document.getElementById("postId").value = "";
+        document.getElementById("email").value = "";
+    });
     }
     
     async function saveChanges() {
