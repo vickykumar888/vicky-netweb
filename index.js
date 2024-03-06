@@ -56,14 +56,14 @@ function validateForm(event) {
      Address:${address}`
     document.body.appendChild(form)
 
-    console.log([{Name:name, LastName: lastName, Email: email, Password: password, RetypePassword: retypePassword,
-      address: address}])
+    console.log({Name:name, LastName: lastName, Email: email, Password: password, RetypePassword: retypePassword,
+      address: address})
   }
 }
 // Function to display error message for a field
 function showError(id, message) {
   const errorElement = document.getElementById(id);
-  console.log(errorElement)
+  // console.log(errorElement)
   errorElement.textContent = message;
   errorElement.style.display = "block";
 
