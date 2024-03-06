@@ -72,7 +72,11 @@ function createTable(item) {
     
      });
       
-     function populateModal(id, title, price){
+     function populateModal(id){
+        const row = document.querySelector(`tr[data-id="${id}"]`);
+        const title = row.querySelector('td:nth-child(3)').textContent;
+        const price = row.querySelector('td:nth-child(5)').textContent;
+    
         document.getElementById("postId").value = id;
         document.getElementById("title").value = title;
         document.getElementById("price").value = price;
