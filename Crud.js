@@ -22,7 +22,10 @@ const root = document.getElementById("root")
 function createTable(item) {
     const table = document.getElementById("table")
 
-    const row = document.createElement('tr');
+    const row = document.createElement('tr')
+    row.setAttribute("data-id", item.id);
+
+
 
     const image = document.createElement('img')
     image.id ="image"
@@ -60,58 +63,22 @@ function createTable(item) {
 
     let update = document.createElement('button')
     update.id ="btnUpdate"
-    update.innerHTML = "Update"
+    update.innerHTML = "Update";
     update.setAttribute("data-bs-toggle", "modal");
     update.setAttribute("data-bs-target", "#exampleModal");
-    update.addEventListener('click', ()=>{
+    update.addEventListener('click', function(){
         console.log("modal click")
-       populateModal(item.id , item.title, item.price);
-       saveChanges()
+       populateModal(item.id , item.title, item.price  );
+    
      });
       
      function populateModal(id, title, price){
         document.getElementById("postId").value = id;
         document.getElementById("title").value = title;
         document.getElementById("price").value = price;
+        console.log(id , title, price);
      }
-     //  let save = document.getElementById('btn1')
-     //  save.addEventListener('click',saveChanges);
-       async function saveChanges() {
-        const postId = document.getElementById("postId").value;
-        const newTitle = document.getElementById("title").value;
-        const newPrice = document.getElementById("price").value;
-
-        const url = `https://jsonplaceholder.typicode.com/posts/${postId}`;
-        const requestOptions = {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                title: newTitle,
-                body: newPrice
-            })
-        };
-        try {
-            const response = await fetch(url, requestOptions)
-            if(response.ok){
-                const updatedData = await response.json()
-                const title = document.querySelector(`tr[data-id="${postId}"] td:nth-child(1)`);
-                const price = document.querySelector(`tr[data-id="${postId}"] td:nth-child(4)`);
-            
-            
-            title.textContent = updatedData.title;
-            price.textContent = updatedData.price;
-            $('#exampleModal').modal('hide');
-            }
-            else {
-                throw new Error ('Failed to update post')
-            } 
-            
-        } catch (error) {
-            console.log(error);
-        }
-    }
+  
     
     table.appendChild(row)
 
@@ -130,6 +97,46 @@ function display(items) {
     });
 }
 
+async function saveChanges() {
+
+    const postId = document.getElementById("postId").value;
+    const newTitle = document.getElementById("title").value;
+    const newPrice = document.getElementById("price").value;
+      console.log(postId,newTitle,newPrice);
+    const url = `https://jsonplaceholder.typicode.com/posts/${postId}`;
+    const requestOptions = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            title: newTitle,
+            price: newPrice
+        })
+    };
+    try {
+        const response = await fetch(url, requestOptions)
+        if(response.ok){
+            console.log(response)
+            const updatedData = await response.json(); 
+            console.log(updatedData);
+            const eleTitle = document.querySelector(`tr[data-id="${postId}"] td:nth-child(3)`);
+            const elePrice = document.querySelector(`tr[data-id="${postId}"] td:nth-child(5)`);
+            console.log(eleTitle);
+            console.log(elePrice);
+        
+        
+            eleTitle.textContent = updatedData.title;
+            elePrice.textContent = updatedData.price;
+            `$('#exampleModal').modal('hide')`;
+        }
+        else {
+            throw new Error ('Failed to update post')
+        } 
+        
+    } catch (error) {
+        console.log(error);
+    }}
 
        // let newTitle = prompt("enter Title")
        // let newPrice = prompt("enter Price")
