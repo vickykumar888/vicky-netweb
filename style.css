@@ -3,11 +3,7 @@
     margin: 0;
     box-sizing: border-box;
 }
-* {
-padding: 0;
-margin: 0;
-box-sizing: border-box;
-}
+
 
 body {
 display: flex;
@@ -31,7 +27,6 @@ flex-direction: column;
 }
 
 label {
-font-weight: bold;
 margin-bottom: 8px;
 }
 
@@ -39,7 +34,8 @@ input,
 textarea {
 padding: 10px;
 margin-bottom: 20px;
-border: 1px solid #ccc;     border-radius: 5px;
+border: 1px solid #ccc;  
+ border-radius: 5px;
 }
 
 button {
@@ -49,16 +45,12 @@ color: #fff;
 border: none;
 border-radius: 5px;
 cursor: pointer;
-transition: background-color 0.3s ease;
 }
 
-button:hover {
-background-color: #b30300;
-}
+
 
 p{
     color:red;
     padding-bottom: 5px;
-
 }
 
