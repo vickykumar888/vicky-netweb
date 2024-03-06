@@ -21,12 +21,18 @@ function validateForm(event) {
     isValid = false;
   }
   if (email == "") {
-    showError("emailError", "Please enter your email address.");
+    showError("emailError", "please enter your email address")
+    isValid = false;
+  } else if (email.indexOf("@") == -1) {
+    showError("emailError", "Please enter your valid email address.");
     isValid = false;
   }
   if (password == "") {
     showError("passwordError", "Please enter a password.");
     isValid = false;
+  } else if (password.length < 6) {
+    showError('passwordError', "Atleast 6 character")
+    isValid = false
   }
   if (retypePassword == "") {
     showError("retypePasswordError", "Please re-enter your password.");
@@ -41,6 +47,15 @@ function validateForm(event) {
     isValid = false;
   }
   if (isValid) {
+    const form = document.createElement("div")
+    form.innerHTML = `Name:${name}<br>
+     Last Name:${lastName}<br>
+     Email:${email}<br>
+     Password:${password}<br>
+     Re-type password:${retypePassword}<br>
+     Address:${address}`
+    document.body.appendChild(form)
+
     console.log("Name:", name, "Last Name:", lastName, "Email:", email, "Password:", password, "Retype Password:", retypePassword,
       "address", address)
   }
@@ -48,6 +63,7 @@ function validateForm(event) {
 // Function to display error message for a field
 function showError(id, message) {
   const errorElement = document.getElementById(id);
+  console.log(errorElement)
   errorElement.textContent = message;
   errorElement.style.display = "block";
 
