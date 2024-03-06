@@ -19,10 +19,13 @@ body {
 }
 
 input:focus {
-  outline: 1px solid #1670be;
+  border: 1px solid #1670be;
   box-shadow: 0 0 3px #1670be;
 }
-
+textarea:focus{
+  border: 1px solid #1670be;
+  box-shadow: 0 0 3px #1670be;
+}
 .display {
   display: flex;
   justify-content: space-around;
