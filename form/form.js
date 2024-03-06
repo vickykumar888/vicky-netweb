@@ -45,9 +45,9 @@ function validateForm() {
       
     errorMsg.textContent = "";
   });
-
+  
   // Check each input field
-  if (name.trim() === "") {
+  if (name.trim() === "" ) {
     document.getElementById("errorField1").innerHTML = "Name is required";
   }
 
@@ -55,8 +55,11 @@ function validateForm() {
     document.getElementById("errorField2").innerHTML = "Address is required";
   }
 
-  if (number.trim() === "") {
+  if (number.trim() === "" ) {
     document.getElementById("errorField3").innerHTML = "Email is required";
+  }if(!emailRegex){
+    document.getElementById("errorField3").innerHTML = "Email is required";
+  
   }
 
   if (email.trim() === "") {
@@ -91,7 +94,14 @@ function validateForm() {
           confirm,
         },
       ];
+      
       console.log("Form Data:", formData);
+      nameInput.value=""
+      emailInput.value=""
+      passwordInput.value=""
+      addressInput.value=""
+      confirmInput.value=""
+      numberInput.value=""
     }
   }
   if (password !== confirm) {
