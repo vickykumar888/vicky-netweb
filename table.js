@@ -5,7 +5,7 @@ const tableNumber = document.getElementById("table")
 inputNumber.addEventListener("input", () => {
   const number = parseInt(inputNumber.value)
 
-  if (!isNaN(number)) {
+  if (!isNaN(number) && (number > 0)) {
     generateTable(number)
   } else {
     tableNumber.innerHTML = ""
