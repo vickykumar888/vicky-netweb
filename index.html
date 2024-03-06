@@ -1,22 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    <link rel="stylesheet" href="style.css">
-    <style>
+    <link rel="styleSheet" href="style.css" />
+  </head>
+  <div id="form">
+    <form class="form" id="signupForm">
+      <h1>Sign up form</h1>
+      <label>Name:</label>
+      <input type="text" id="name" placeholder="Name" class="input email" />
+      <div id="nameError" class="error"></div>
+      <label>Last Name:</label>
+      <input
+        type="text"
+        id="lastName"
+        placeholder="Last Name"
+        class="input email"
+      />
+      <div id="lastNameError" class="error"></div>
+      <label>Email:</label>
+      <input type="email" id="email" placeholder="Email" class="input email" />
+      <div id="emailError" class="error"></div>
+      <label>Password:</label>
+      <input
+        type="password"
+        id="password"
+        placeholder="Password"
+        class="input email"
+      />
+      <div id="passwordError" class="error"></div>
+      <label>Re-type password:</label>
+      <input
+        type="password"
+        id="retype_password"
+        placeholder="Retype Password"
+        class="input email"
+      />
+      <div id="retypePasswordError" class="error"></div>
+      <label>Address:</label>
+      <textarea
+        type="textarea"
+        id="address"
+        placeholder="address"
+        class="input email"></textarea>
+      ></textarea>
+      <div id="addressError" class="error"></div>
 
-    </style>
-</head>
-<body >
-    <p style="color: red;">Lorem ipsum dolor sit amet  <span></span>consectetur adipisicing elit. Fuga eveniet eius libero, eum provident dignissimos odio, sunt, magni esse debitis itaque molestiae ut voluptatum fugit laudantium beatae nobis velit commodi.</p>
-    <h1>javacsript </h1>
-   
-
-    
-    
-    <script src="fetch.js"></script>
-</body>
+      <button class="btn" type="submit">Submit</button>
+    </form>
+  </div>
+  <body>
+    <script src="index.js"></script>
+  </body>
 </html>

@@ -1,0 +1,50 @@
+body {
+  background-color: #c5c5c5;
+  padding-bottom: 20px;
+}
+
+.form {
+  background-color: white;
+  width: 30%;
+  margin: auto;
+  padding: 15px;
+  height: auto;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px 3px grey;
+}
+
+.input {
+  padding: 8px;
+  outline: none;
+}
+
+input:focus {
+  border: 1px solid #1670be;
+  box-shadow: 0 0 3px #1670be;
+}
+
+.display {
+  display: flex;
+  justify-content: space-around;
+}
+
+.email {
+  width: 95%;
+  margin-bottom: 10px;
+
+}
+.btn{
+  background-color:  #1670be;;
+  border: none;
+  padding: 10px;
+  color:white;
+  font-size: 16px;
+}
+.error{
+  color:red;
+  margin-bottom: 10px;
+  
+}
+.input_invalid{
+  border: 1px solid red;
+}
