@@ -1,0 +1,31 @@
+img{
+    border-radius: 50%;
+    width: 75px;
+    height: 75px;
+
+}
+body{
+    background: rgb(225, 206, 226);
+    
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    background: white;
+    align-items: stretch; 
+
+    margin: 5%;
+    margin-left: 30%;
+    max-width: 450px;
+    
+}
+.item{
+    display: inline-block;
+    margin-left: 20px;
+}
+button{
+    margin: 10px;
+    background: violet;
+    height: 25px;
+
+}
