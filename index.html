@@ -1,22 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    <link rel="stylesheet" href="style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Birthday List</title>
+    <link rel="styleSheet" href="style.css" />
     <style>
-
+      /* Add your CSS styles here */
+      #container {
+        margin: 5% auto;
+        padding: 15px;
+        height: auto;
+        width: 500px;
+      }
+      .birthday-item {
+        display: flex;
+        padding: 8px;
+        font-size: 20px;
+        
+        justify-content: initial;
+      }
+      .years {
+        color: gray;
+        margin-top: -15px;
+      }
     </style>
-</head>
-<body >
-    <p style="color: red;">Lorem ipsum dolor sit amet  <span></span>consectetur adipisicing elit. Fuga eveniet eius libero, eum provident dignissimos odio, sunt, magni esse debitis itaque molestiae ut voluptatum fugit laudantium beatae nobis velit commodi.</p>
-    <h1>javacsript </h1>
-   
+  </head>
+  <body>
+    <div id="container">
+      <h2 id="birthdayCount">5 Birthdays Today</h2>
+      <div id="birthdayList">
+        <!-- Birthday items will be displayed here -->
+      </div>
+      <button id="clearAllButton">Clear All</button>
+    </div>
 
-    
-    
-    <script src="fetch.js"></script>
-</body>
+    <script>
+      // Array of birthday objects
+      const birthdays = [
+        {
+          name: "Bertie Yates",
+          age: 29,
+          birthdayImgUrl:
+            "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=600",
+        },
+        {
+          name: "Hester Hogan",
+          age: 32,
+          birthdayImgUrl:
+            "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+        },
+        {
+          name: "Larry Little",
+          age: 36,
+          birthdayImgUrl:
+            "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+        },
+        {
+          name: "Sean Walsh",
+          age: 34,
+          birthdayImgUrl:
+            "https://images.pexels.com/photos/11810557/pexels-photo-11810557.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+        },
+        {
+          name: "Lola Gardner",
+          age: 29,
+          birthdayImgUrl:
+            "https://images.pexels.com/photos/3185944/pexels-photo-3185944.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+        },
+      ];
+
+      // Function to generate HTML for a single birthday item
+      function generateBirthdayHTML(birthday) {
+        return `
+        <div class="birthday-item">
+          <img src="${birthday.birthdayImgUrl}" class="image"/>&nbsp;&nbsp;&nbsp;
+          <div>
+          <h2>${birthday.name}</h2>
+          <p class="years">${birthday.age} years</p>
+          </div>
+          
+         
+      `;
+      }
+
+      // Function to display birthdays
+      function displayBirthdays() {
+        const birthdayListContainer = document.getElementById("birthdayList");
+        birthdayListContainer.innerHTML = "";
+        birthdays.map((birthday) => {
+          birthdayListContainer.innerHTML += generateBirthdayHTML(birthday);
+        });
+      }
+
+      // Function to clear all birthdays
+      function clearAllBirthdays() {
+        const birthdayListContainer = document.getElementById("birthdayList");
+        birthdayListContainer.innerHTML = "";
+        document.getElementById("birthdayCount").textContent =
+          "0 Birthdays Today";
+      }
+
+      // Event listener for Clear All button
+      document
+        .getElementById("clearAllButton")
+        .addEventListener("click", clearAllBirthdays);
+
+      // Display initial birthdays
+      displayBirthdays();
+    </script>
+  </body>
 </html>
