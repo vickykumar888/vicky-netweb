@@ -1,27 +1,27 @@
 let birthdays = [
     {
         name: "Bertie Yates",
-        age: "29 Years",
+        age: "29 ",
         image: "https://www.course-api.com/images/people/person-1.jpeg"
     },
     {
         name: "Hester Hogan ",
-        age: "32 Years",
+        age: "32 ",
         image: "https://www.course-api.com/images/people/person-2.jpeg"
     },
     {
         name: "Larry Littles",
-        age: "36 Years",
+        age: "36",
         image: "https://www.course-api.com/images/people/person-3.jpeg"
     },
     {
         name: "Sean Walsh",
-        age: "34 Years",
+        age: "34 ",
         image: "https://www.course-api.com/images/people/person-4.jpeg"
     },
     {
         name: "Lola Gardner",
-        age: "29 Years",
+        age: "29 ",
         image: "https://www.course-api.com/images/people/person-5.jpeg"
     },
 
