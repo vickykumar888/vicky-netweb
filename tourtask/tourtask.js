@@ -36,7 +36,7 @@ let data = [
     image: "https://www.course-api.com/images/tours/tour-2.jpeg",
     heading: "Best of Poland in 10 Days Tour",
     sub_heading:
-      "Starting in the colorful port city of Gdańsk, you'll escape the crowds and embrace the understated elegance of ready-for-prime-time Poland for 10 days. With an expert Rick Steves guide at your side",
+      "Starting in the colorful port city of Gdańsk, you'll escape the crowds and embrace the understated elegance of ready-for-prime-time Poland for 10 days. With an expert Rick Steves guide at your side  ready-for-prime-time Poland for 10 days. With an expert Rick Steves guide at your side  ready-for-prime-time Poland for 10 days. With an expert Rick Steves guide at your side",
     price: "$2,595",
   },
 ];
@@ -58,10 +58,11 @@ document.head.appendChild(styleSheet);
 
 const container = document.getElementById("container");
 const tour_text = document.getElementById("tours");
+const remove_line = document.getElementById("line");
+
 function renderData() {
   container.innerHTML = "";
-  
-  
+
   if (data.length <= 0) {
     const refreshButton = document.createElement("button");
     refreshButton.innerHTML = "Refresh";
@@ -77,7 +78,6 @@ function renderData() {
     tour_text.innerHTML = "No Tours Left";
     refreshButton.addEventListener("click", refreshData);
     container.appendChild(refreshButton);
-
   } else {
     data.forEach((value) => {
       const personContainer = document.createElement("div");
@@ -85,7 +85,7 @@ function renderData() {
       personContainer.style.background = "rgba(0, 0, 0, 0.35) 0px 5px 12px";
       personContainer.style.margin = "auto";
       personContainer.style.marginTop = "20px";
-      
+
       //Price
       let imageContainer = document.createElement("div");
       imageContainer.style.position = "relative";
@@ -94,6 +94,7 @@ function renderData() {
       let priceTag = document.createElement("div");
       priceTag.innerHTML = value.price;
       priceTag.style.position = "absolute";
+      priceTag.style.color="#fff"
       priceTag.style.top = "0";
       priceTag.style.right = "0";
       priceTag.style.background = "#ffffff";
@@ -106,25 +107,25 @@ function renderData() {
       image_ele.src = value.image;
       personContainer.appendChild(image_ele);
       image_ele.style.width = "352px";
-      
+
       //Heading
       let heading = document.createElement("h5");
       heading.innerHTML = value.heading;
       heading.style.fontSize = "1.25rem";
-      heading.style.maxWidth="240px"
-      heading.style.margin="25px 25px"
+      heading.style.maxWidth = "240px";
+      heading.style.margin = "25px 25px";
       heading.style.fontWeight = "500";
       personContainer.appendChild(heading);
-      
+
       //Sub-heading
       let sub_heading = document.createElement("p");
       sub_heading.innerHTML = value.sub_heading.substring(0, 100);
       personContainer.appendChild(sub_heading);
       sub_heading.style.color = "#64748b";
       sub_heading.style.maxWidth = "300px";
-      sub_heading.style.margin="auto"
+      sub_heading.style.margin = "auto";
       // sub_heading.style.margin="0px"
-      
+
       //more/less Text
       const seeMoreSpan = document.createElement("span");
       seeMoreSpan.innerHTML = "....See More";
@@ -133,20 +134,20 @@ function renderData() {
       sub_heading.appendChild(seeMoreSpan);
 
       seeMoreSpan.addEventListener("click", () => {
-        if(seeMoreSpan.innerHTML==="......See less"){
+        if (seeMoreSpan.innerHTML === "......See less") {
           seeMoreSpan.innerHTML = "......See more";
-          sub_heading.innerHTML = value.sub_heading.substring(0,100);
-        sub_heading.appendChild(seeMoreSpan);
-        }else{
-            console.log("See More");
-            seeMoreSpan.innerHTML = "......See less";
-            sub_heading.innerHTML = value.sub_heading
-            sub_heading.appendChild(seeMoreSpan);
+          sub_heading.innerHTML = value.sub_heading.substring(0, 100);
+          sub_heading.appendChild(seeMoreSpan);
+        } else {
+          console.log("See More");
+          seeMoreSpan.innerHTML = "......See less";
+          sub_heading.innerHTML = value.sub_heading;
+          sub_heading.appendChild(seeMoreSpan);
         }
       });
 
       container.appendChild(personContainer);
-      
+
       //Not Interested Button
       const button = document.createElement("button");
       button.innerHTML = "Not Intersted";
@@ -166,6 +167,7 @@ function renderData() {
         let idToRemove = value.id;
         data = data.filter((item) => item.id !== idToRemove);
         console.log(`data remove with id ${idToRemove}`);
+
         renderData();
       });
       personContainer.appendChild(button);
