@@ -55,11 +55,13 @@ styleSheet.innerHTML = `
   }
 `;
 document.head.appendChild(styleSheet);
+
 const container = document.getElementById("container");
 const tour_text = document.getElementById("tours");
 function renderData() {
   container.innerHTML = "";
-
+  
+  
   if (data.length <= 0) {
     const refreshButton = document.createElement("button");
     refreshButton.innerHTML = "Refresh";
@@ -74,17 +76,17 @@ function renderData() {
     container.style.justifyContent = "center";
     tour_text.innerHTML = "No Tours Left";
     refreshButton.addEventListener("click", refreshData);
-
     container.appendChild(refreshButton);
+
   } else {
     data.forEach((value) => {
       const personContainer = document.createElement("div");
-      //   personContainer.style.boxShadow="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;"
       personContainer.style.boxShadow = "0px 8px 24px rgba(149, 157, 165, 0.2)";
       personContainer.style.background = "rgba(0, 0, 0, 0.35) 0px 5px 12px";
       personContainer.style.margin = "auto";
       personContainer.style.marginTop = "20px";
-
+      
+      //Price
       let imageContainer = document.createElement("div");
       imageContainer.style.position = "relative";
       personContainer.appendChild(imageContainer);
@@ -99,23 +101,31 @@ function renderData() {
       priceTag.style.background = "#10b981";
       imageContainer.appendChild(priceTag);
 
+      //Image
       let image_ele = document.createElement("img");
       image_ele.src = value.image;
       personContainer.appendChild(image_ele);
       image_ele.style.width = "352px";
-
+      
+      //Heading
       let heading = document.createElement("h5");
       heading.innerHTML = value.heading;
       heading.style.fontSize = "1.25rem";
+      heading.style.maxWidth="240px"
+      heading.style.margin="25px 25px"
       heading.style.fontWeight = "500";
       personContainer.appendChild(heading);
-
+      
+      //Sub-heading
       let sub_heading = document.createElement("p");
       sub_heading.innerHTML = value.sub_heading.substring(0, 100);
       personContainer.appendChild(sub_heading);
       sub_heading.style.color = "#64748b";
-      sub_heading.style.width = "350px";
-
+      sub_heading.style.maxWidth = "300px";
+      sub_heading.style.margin="auto"
+      // sub_heading.style.margin="0px"
+      
+      //more/less Text
       const seeMoreSpan = document.createElement("span");
       seeMoreSpan.innerHTML = "....See More";
       seeMoreSpan.style.color = "#10b981";
@@ -126,27 +136,18 @@ function renderData() {
         if(seeMoreSpan.innerHTML==="......See less"){
           seeMoreSpan.innerHTML = "......See more";
           sub_heading.innerHTML = value.sub_heading.substring(0,100);
-
         sub_heading.appendChild(seeMoreSpan);
-
         }else{
-          
-            console.log("jhdgjhfgdsjh");
-
-            // sub_heading.appendChild(seeMoreSpan);
+            console.log("See More");
             seeMoreSpan.innerHTML = "......See less";
-
-
             sub_heading.innerHTML = value.sub_heading
             sub_heading.appendChild(seeMoreSpan);
-          
         }
-        
-        
       });
 
       container.appendChild(personContainer);
-
+      
+      //Not Interested Button
       const button = document.createElement("button");
       button.innerHTML = "Not Intersted";
       button.style.color = "#10b981";
@@ -161,11 +162,9 @@ function renderData() {
       button.style.margin = "15px 0px";
       button.style.padding = "10px";
       button.style.marginLeft = "15px";
-      //   button.style.onmouseover.background="#10b981"
       button.addEventListener("click", () => {
         let idToRemove = value.id;
         data = data.filter((item) => item.id !== idToRemove);
-        // container.removeChild(personContainer);
         console.log(`data remove with id ${idToRemove}`);
         renderData();
       });
