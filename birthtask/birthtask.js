@@ -68,6 +68,7 @@ data.forEach((value) => {
 });
 const button = document.createElement("button");
 button.innerHTML = "Clear All";
+button.style.color="#fff"
 button.style.marginTop = "20px";
 button.style.width = "90%";
 button.style.padding = "0.375rem 0.75rem";
