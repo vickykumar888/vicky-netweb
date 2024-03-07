@@ -67,7 +67,7 @@ data.forEach((value) => {
   container.appendChild(personContainer);
 });
 const button = document.createElement("button");
-button.innerHTML = "Click me";
+button.innerHTML = "Clear All";
 button.style.marginTop = "20px";
 button.style.width = "90%";
 button.style.padding = "0.375rem 0.75rem";
@@ -85,5 +85,9 @@ button.addEventListener("click", () => {
     element.remove();
   });
   newtext.innerHTML = "0 Birthday Today";
+  if(newtext){
+    main_container.style.height="100vh"
+    container.style.height="200px"
+  }
 });
 container.appendChild(button);
