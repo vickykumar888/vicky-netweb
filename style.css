@@ -1,9 +1,10 @@
-html {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-          body{
+ *{
+      padding: 0;
+      margin: 0;
+      font-family: "Lato", sans-serif;
+      font-weight: 400;
+    }
+    body{
               background: #FAE8FF;
           }
           .item-content {
@@ -11,7 +12,7 @@ html {
       align-items: center; 
   }
   img {
-    width: 70px;
+    width: 82px;
     height: 81px;
     border-radius: 50%;
     object-fit: cover;
@@ -23,32 +24,29 @@ html {
   #clearButton {
     background: #D946EF;
     cursor: pointer;
-    color: red;
-    padding: 13px 128px;
-    display: block;
-    padding: 13px 14px;
+    padding: 8px 14px;
     text-align: center;
     color:#FFFFFF;
   }
-  .clearButton{
-      background: #D946EF;
-      cursor: pointer;
-      color:red;
-      padding: 13px 26px;
-  }
-  #container {
-    max-width: 471px;
-    background-color: pink;
-    width: 1248px;
-    padding-left: 30px;
-    background: #FFFFFF;
-    box-shadow:  1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
-    border-radius: .25rem;
-    
-  }
   
+  #container {
+    max-width: 540px;
+    background-color: pink;
+    width: 100%;
+    /* padding-left: 30px; */
+    background: #FFFFFF;
+    box-shadow: 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
+    border-radius: .25rem;
+    margin: auto;
+    padding: 20px;
+    margin-top: 30px;
+  }
+  h3{
+    font-size: 23px;
+  }
   h5{
       color:#64748b;
+      margin-top: 10px;
   }
   
   

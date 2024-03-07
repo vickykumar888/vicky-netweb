@@ -20,34 +20,50 @@ function generateBirthdayHTML(birthday) {
     `;
 }
 
+function generateHeading(count) {
+    const heading = document.createElement('h1');
+    heading.classList.add('header');
+    
+    heading.textContent = `${count} Birthday today`;
+    return heading;
+}
+
+function generateClearAllButton() {
+    const clearnBtn = document.createElement('div');
+    clearnBtn.id = 'clearButton'; 
+    clearnBtn.textContent = "Clear all"; 
+    return clearnBtn;
+}
 
 
-function generateBirthdays() {
+
+    
+  function generateBirthdays() {
     const container = document.getElementById('container');
-    // container.innerHTML = '';
+
     let content = '';
     birthdays.forEach(birthday => {
         content += generateBirthdayHTML(birthday);
     });
-    container.innerHTML = content;
+    container.innerHTML += content;
+    container.insertAdjacentElement('afterbegin', generateHeading(container.childElementCount));
+
+    container.appendChild(generateClearAllButton())
+
 }
 
-function updateBirthdayCont() {
-    let heading = document.querySelector(".heading");
-    if (birthdayCount === 1) {
-        heading.textContent = `${birthdayCount} birthday today`;
-    } else {
-        heading.textContent = `${birthdayCount} birthdays today`;
-    }
-}
+
 
 window.onload = function () {
     generateBirthdays();
-    updateBirthdayCont();
 };
 
-document.getElementById('clearButton').addEventListener('click', function () {
-    document.getElementById('container').innerHTML = '';
-    birthdayCount = 0;
-    updateBirthdayCont();
+document.addEventListener('click', function (event) {
+    if (event.target && event.target.id === 'clearButton') {
+        let container = document.getElementById('container');
+        container.innerHTML = "";
+        container.insertAdjacentElement('afterbegin', generateHeading(container.childElementCount));
+        container.appendChild(generateClearAllButton())
+
+    }
 });
